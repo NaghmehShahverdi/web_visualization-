@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  mces-db:
+    restart: unless-stopped
+    container_name: mces-db
+    image: postgres:15.4
+    env_file:
+      - .env
+    volumes:
+      - mces-db-volume:/var/lib/postgresql/data
+    networks:
+      - mces-net
+
+  mces-app:
+    restart: unless-stopped
+    container_name: mces-app
+    depends_on:
+      - mces-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/srv/mces
+      - /etc/localtime:/etc/localtime
+      - mces-static-volume:/srv/static
+      - mces-media-volume:/srv/media
+    networks:
+      - mces-net
+    environment:
+      - PRODUCTION=True
+    env_file:
+      - .env
+
+
+  mces-nginx:
+    container_name: mces-nginx
+    restart: unless-stopped
+    image: nginx:v1
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/brotli.conf:/etc/nginx/conf.d/brotli.conf
+      - mces-static-volume:/srv/static
+      - mces-media-volume:/srv/media
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    depends_on:
+      - mces-app
+    networks:
+      - mces-net
+
+
+networks:
+  mces-net:
+    name: mces-net
+
+volumes:
+  mces-db-volume:
+  mces-static-volume:
+  mces-media-volume:

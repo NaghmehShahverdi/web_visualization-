@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #212124;
+  background-image: url("../img/bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.dark-overlay {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.78); /* Adjust the opacity for darkness */
+  pointer-events: none; /* Allows clicking through the overlay */
+  z-index: -1;
+}
+
+#container {
+  display: grid;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+#search_filter {
+  display: none;
+  align-items: center;
+  gap: 0px;
+}
+
+#lazy_load {
+  display: block;
+  color: #fff;
+  font-size: 2em;
+}
+
+.dropdown {
+  padding: 15px 15px;
+  font-size: 1em;
+  border: 1px solid #424141;
+  background-color: rgba(11, 11, 11, 0.631);
+  color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 50px;
+  cursor: pointer;
+}
+
+.dropdown:focus {
+  outline: none !important;
+}
+
+input[type="text"] {
+  padding: 15px 10px;
+  font-size: 1em;
+  border: 1px solid #424141;
+  border-left: none;
+  background-color: rgba(11, 11, 11, 0.631);
+  color: #fff;
+  text-align: center;
+  height: 50px;
+}
+input[type="text"]:focus {
+  outline: none !important;
+  border: 1px solid #0ecab1;
+}
+
+input[type="submit"] {
+  padding: 15px 30px;
+  font-size: 1em;
+  border: 1px solid #1b9d8c;
+  background-color: rgba(16, 89, 80, 0.671);
+  cursor: pointer;
+  color: #fff;
+  -webkit-transition: background 300ms;
+  transition: background 300ms;
+  height: 50px;
+}
+
+input[type="submit"]:hover {
+  background-color: #2ac0ac;
+}
+
+#results {
+  display: none;
+  width: 100%;
+  min-height: 500px;
+  text-align: center;
+  color: #fff;
+}
+
+.content {
+  text-align: justify;
+  color: #fff;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+.content p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #1b9d8c;
+  margin-bottom: 40px;
+}
+.content h3 {
+  font-size: 1em;
+  line-height: 23px;
+}
+
+#description {
+  text-align: justify;
+  color: #fff;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 0.9em;
+  line-height: 23px;
+}
+
+.plotly-graph-div {
+  margin: 0 auto !important;
+}
+
+@media (max-width: 768px) {
+  #search_filter {
+    flex-direction: column !important;
+    align-items: initial !important;
+    margin-bottom: 10px !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+  .graph {
+    width: 100% !important;
+  }
+  input[type="text"] {
+    border: 1px solid #424141 !important;
+  }
+
+  .content {
+    width: 90% !important;
+  }
+  .content p {
+    font-size: 1em !important;
+  }
+  .content h3 {
+    font-size: 0.9em !important;
+  }
+}

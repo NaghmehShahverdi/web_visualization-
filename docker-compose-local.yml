@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  mces-db:
+    restart: unless-stopped
+    container_name: mces-db
+    image: postgres:15.4
+    env_file:
+      - .env
+    volumes:
+      - mces-db-volume:/var/lib/postgresql/data
+    networks:
+      - mces-net
+
+  mces-app:
+    restart: unless-stopped
+    container_name: mces-app
+    depends_on:
+      - mces-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./:/srv/mces
+      - /etc/localtime:/etc/localtime
+      - mces-static-volume:/srv/static
+      - mces-media-volume:/srv/media
+    networks:
+      - mces-net
+    environment:
+      - PRODUCTION=False
+    env_file:
+      - .env
+
+networks:
+  mces-net:
+    name: mces-net
+
+volumes:
+  mces-db-volume:
+  mces-static-volume:
+  mces-media-volume:

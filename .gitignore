@@ -1,0 +1,11 @@
+media/
+tmp/
+passenger_wsgi.py
+stderr.log
+__pycache__/
+**/migrations/*
+.idea
+.vscode
+db.sqlite3
+data/
+data.tar.gz
