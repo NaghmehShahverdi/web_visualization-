@@ -1,7 +1,6 @@
 from django.db.models import Q
 from django.views.generic import TemplateView
 from app.models import Cell
-from mces.utils import generate_graph1, generate_graph2, generate_graph3, generate_graph4
 
 
 class Index(TemplateView):
@@ -16,14 +15,12 @@ class Index(TemplateView):
         cluster = param.get('cluster', '')
         visualization = param.get('visualization', 'option0')
         gene = param.get('gene', '')
-        sort = param.get('sort')
 
         context['scz_2022_p'] = scz_2022_p
         context['spe_rank'] = spe_rank
         context['cluster'] = cluster
         context['visualization'] = visualization
         context['gene'] = gene
-        context['sort'] = sort
         context['count'] = count
         context['cells'] = []
 
@@ -44,33 +41,19 @@ class Index(TemplateView):
             if spe_rank and cluster:
                 query.add(Q(spe_rank__gte=spe_rank, cluster=cluster), Q.AND)
 
-        if not scz_2022_p and not gene and not spe_rank:
+        if visualization == 'option5':
+            if cluster:
+                query.add(Q(cluster=cluster), Q.AND)
+
+        if not scz_2022_p and not gene and not spe_rank and not cluster:
             filtered_genes = []
         else:
 
-            if sort:
-                filtered_genes = Cell.objects.filter(query).values(
-                    'cluster', 'name', 'spe_rank', 'scz_2022_p_log').order_by(sort)
-            else:
-                filtered_genes = Cell.objects.filter(query).values(
-                    'cluster', 'name', 'spe_rank', 'scz_2022_p_log')
+            filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True).values(
+                'cluster', 'name', 'spe_rank', 'scz_2022_p_log')
             count = filtered_genes.count()
 
-        if count != 0:
-            if visualization == 'option1':
-                graph = generate_graph1(filtered_genes)
-
-            if visualization == 'option2':
-                graph = generate_graph2(filtered_genes)
-
-            if visualization == 'option3':
-                graph = generate_graph3(filtered_genes)
-
-            if visualization == 'option4':
-                graph = generate_graph4(filtered_genes)
-
-            context['graph'] = graph
-
         context['count'] = count
+        context['results'] = filtered_genes
 
         return context

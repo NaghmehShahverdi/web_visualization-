@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
-  <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
-  <link rel="apple-touch-icon" href="{% static 'img/logo.png' %}">
+  <link rel="stylesheet" href="{% static 'css/table.css' %}" />
+
 
   <title>Search and Filter Template</title>
 </head>
@@ -17,10 +17,13 @@
   <div class="dark-overlay"></div>
   <input type="hidden" id="count" value="{{ count }}">
   <div class="content">
-    <p>Mapping Schizophrenia's Cellular Etiology: Integrating snRNAseq and GWASs</p>
-    <h3p>Welcome to our platform, where we offer four distinct visualization options tailored to unveil the intricacies
-      of schizophrenia genetics. Simply select your preferred visualization, and a corresponding explanation will guide
-      your exploration.
+    <p><a href="/">Mapping Schizophrenia's Cellular Etiology: Integrating snRNAseq and GWASs</a></p>
+    <h3p>Welcome to our platform, where we offer four specialized tables that allow you to explore gene specificity
+      ranks and their p-values in relation to schizophrenia. Tables can be tailored based on different thresholds for
+      p-values, specificity ranks, or gene names.
+
+      To sort tables by a specific column, simply click on the column header. Clicking the column header again will
+      reverse the sort order. For information on a specific gene or value, use the search box located above the table.
       </h3>
   </div>
   <div id="container">
@@ -29,19 +32,20 @@
       <div id="search_filter">
         <select id="visualization" class="dropdown" name="visualization">
           <option value="option0" selected hidden disabled>Select Option</option>
-          <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cluster-Specific Heat Map Based on -log(p-value)</option>
+          <option value="option5" {% if visualization == 'option5' %}selected{% endif %}>Cluster Information</option>
+          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Specificity Profile of a Gene
+            Across Clusters</option>
+          <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cluster-Specific Based
+            on -log(p-value)</option>
           <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene Specificity in Selected
             Cluster
           </option>
-          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Specificity Profile of a Gene Across Clusters</option>
-          <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Gene P-value in Selected Cluster</option>
+          <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Gene P-value in Selected Cluster
+          </option>
         </select>
-        <select id="sort" class="dropdown" name="sort">
-          <option value="" disabled selected hidden>Sort by</option>
-          <option value="spe_rank" {% if sort == 'spe_rank' %}selected{% endif %}>Specificity Rank</option>
-          <option value="-scz_2022_p_log" {% if sort == '-scz_2022_p_log' %}selected{% endif %}>P-Value</option>
-        </select>
-        <input name="scz_2022_p" type="text" id="textInput1" placeholder="-log(P-Value) Threshold" value="{{ scz_2022_p }}">
+
+        <input name="scz_2022_p" type="text" id="textInput1" placeholder="-log(P-Value) Threshold"
+          value="{{ scz_2022_p }}">
         <input name="spe_rank" type="text" id="textInput2" placeholder="Specificity Rank" value="{{ spe_rank }}">
         <input name="cluster" type="text" id="textInput3" placeholder="Cluster ID" value="{{ cluster }}">
         <input name="gene" type="text" id="textInput4" placeholder="Gene" value="{{ gene }}">
@@ -51,20 +55,87 @@
     <div id="description">
     </div>
 
+    <div id="results"></div>
   </div>
 
 
-  <div id="results">
 
-    {% if visualization == 'option1' %}
-    {{ graph|safe }}
-    {% elif visualization == 'option2' or visualization == 'option4' %}
-    <img class="graph" src="data:image/png;base64,{{ graph }}" />
-    {% elif visualization == 'option3' %}
-    <img class="graph" src="data:image/png;base64,{{ graph }}" />
+
+
+  <script src="{% static 'js/table.js' %}"></script>
+
+  <script>
+
+    new gridjs.Grid({
+      pagination: {
+        limit: 30,
+        summary: false
+      },
+      sort: true,
+      fixedHeader: true,
+      search: true,
+      {% if visualization == 'option1' %}
+    columns: ["Name", "Cluster", "SPE_Rank"],
+      data: [
+        {% for item in results %}
+    ["{{ item.name }}", {{ item.cluster }}, {{ item.spe_rank }}],
+      {% endfor %}
+      ],
     {% endif %}
+    {% if visualization == 'option2' %}
+    columns: ["Name", "SPE_Rank"],
+      data: [
+        {% for item in results %}
+    ["{{ item.name }}", {{ item.spe_rank }}],
+      {% endfor %}
+      ],
+    {% endif %}
+    {% if visualization == 'option3' %}
+    columns: ["Cluster", "SPE_Rank"],
+      data: [
+        {% for item in results %}
+    [{{ item.cluster }}, {{ item.spe_rank }}],
+      {% endfor %}
+      ],
+    {% endif %}
+    {% if visualization == 'option4' %}
+    columns: ["Name", "SCZ 2022 P Log"],
+      data: [
+        {% for item in results %}
+    ["{{ item.name }}", {{ item.scz_2022_p_log }}],
+      {% endfor %}
+      ],
+    {% endif %}
+    {% if visualization == 'option5' %}
+    columns: ["Name", "SCZ 2022 P Log", "SPE_Rank"],
+      data: [
+        {% for item in results %}
+    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_rank }}],
+      {% endfor %}
+      ],
+    {% endif %}
+    style: {
+      table: {
+        'border': '2px solid rgb(39, 42, 47)',
+          'background-color': 'rgba(0, 0, 0, 0)'
+      },
+      th: {
+        'color': '#fff',
+          'border': '2px solid #1b9d8c',
+            'text-align': 'center',
+              'background-color': 'rgba(16, 89, 80, 0.671)'
+      },
+      td: {
+        'background-color': '#080c13',
+          'text-align': 'center',
+            'color': 'rgb(144, 167, 174)',
+              'border': '2px solid rgb(39, 42, 47)',
+      }
+    }
+    }).render(document.getElementById("results"));
 
-  </div>
+
+  </script>
 
 
 
