@@ -99,7 +99,7 @@
       ],
     {% endif %}
     {% if visualization == 'option4' %}
-    columns: ["Name", "SCZ 2022 P Log"],
+    columns: ["Name", "-log (p-Value)"],
       data: [
         {% for item in results %}
     ["{{ item.name }}", {{ item.scz_2022_p_log }}],
@@ -107,7 +107,7 @@
       ],
     {% endif %}
     {% if visualization == 'option5' %}
-    columns: ["Name", "SCZ 2022 P Log", "SPE_Rank"],
+    columns: ["Name", "-log (p-Value)", "SPE_Rank"],
       data: [
         {% for item in results %}
     ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_rank }}],
