@@ -48,8 +48,9 @@
           value="{{ scz_2022_p }}">
         <input name="spe_rank" type="text" id="textInput2" placeholder="Specificity Rank" value="{{ spe_rank }}">
         <input name="cluster" type="text" id="textInput3" placeholder="Cluster ID" value="{{ cluster }}">
-        <input name="gene" type="text" id="textInput4" placeholder="Gene" value="{{ gene }}">
+        <input name="gene" type="text" id="textInput4" placeholder="Gene" value="{{ gene }}" autocomplete="off">
         <input id="search_button" type="submit" value="search">
+        <ul id="suggestionList"></ul>
       </div>
     </form>
     <div id="description">
@@ -140,6 +141,7 @@
 
 
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/gene_filter.js' %}"></script>
 </body>
 
 </html>
