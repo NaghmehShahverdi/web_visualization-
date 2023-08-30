@@ -107,7 +107,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 if PRODUCTION:
-    ALLOWED_HOSTS = ['psy-map.com.com', 'www.psy-map.com.com']
+    ALLOWED_HOSTS = ['psy-map.com', 'www.psy-map.com']
     DEBUG = False
 else:
     ALLOWED_HOSTS = ['*']
