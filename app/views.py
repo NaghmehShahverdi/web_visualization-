@@ -49,8 +49,8 @@ class Index(TemplateView):
             filtered_genes = []
         else:
 
-            filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True).values(
-                'cluster', 'name', 'spe_rank', 'scz_2022_p_log')
+            filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True, spe_val__isnull=True,).values(
+                'cluster', 'name', 'spe_rank', 'scz_2022_p_log', 'spe_val')
             count = filtered_genes.count()
 
         context['count'] = count

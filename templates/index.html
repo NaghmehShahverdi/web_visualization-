@@ -76,42 +76,42 @@
       fixedHeader: true,
       search: true,
       {% if visualization == 'option1' %}
-    columns: ["Name", "Cluster", "SPE_Rank"],
+    columns: ["Name", "Cluster", "SPE_Rank", "SPE_Value"],
       data: [
         {% for item in results %}
-    ["{{ item.name }}", {{ item.cluster }}, {{ item.spe_rank }}],
+    ["{{ item.name }}", {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}],
       {% endfor %}
       ],
     {% endif %}
     {% if visualization == 'option2' %}
-    columns: ["Name", "SPE_Rank"],
+    columns: ["Name", "SPE_Rank", "SPE_Value"],
       data: [
         {% for item in results %}
-    ["{{ item.name }}", {{ item.spe_rank }}],
+    ["{{ item.name }}", {{ item.spe_rank }}, {{ item.spe_val }}],
       {% endfor %}
       ],
     {% endif %}
     {% if visualization == 'option3' %}
-    columns: ["Cluster", "SPE_Rank"],
+    columns: ["Cluster", "SPE_Rank", "SPE_Value"],
       data: [
         {% for item in results %}
-    [{{ item.cluster }}, {{ item.spe_rank }}],
+    [{{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}],
       {% endfor %}
       ],
     {% endif %}
     {% if visualization == 'option4' %}
-    columns: ["Name", "-log (p-Value)"],
+    columns: ["Name", "-log (p-Value)", "SPE_Value"],
       data: [
         {% for item in results %}
-    ["{{ item.name }}", {{ item.scz_2022_p_log }}],
+    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_val }}],
       {% endfor %}
       ],
     {% endif %}
     {% if visualization == 'option5' %}
-    columns: ["Name", "-log (p-Value)", "SPE_Rank"],
+    columns: ["Name", "-log (p-Value)", "SPE_Rank", "SPE_Value"],
       data: [
         {% for item in results %}
-    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_rank }}],
+    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_rank }}, {{ item.spe_val }}],
       {% endfor %}
       ],
     {% endif %}

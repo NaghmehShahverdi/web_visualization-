@@ -1,7 +1,9 @@
+const allInputs = document.querySelectorAll('input[type="text"]');
 const container = document.getElementById("container");
 const search_filter = document.getElementById("search_filter");
 const lazy_load = document.getElementById("lazy_load");
 const results = document.getElementById("results");
+const form = document.getElementById("form");
 const description = document.getElementById("description");
 const count = document.getElementById("count");
 const visualization = document.getElementById("visualization");
@@ -37,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (visualization.value === "option1") {
-    inputValidation(textInput1, 5);
     textInput3.style.display = "none";
     textInput2.style.display = "none";
     textInput4.style.display = "none";
@@ -45,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     textInput3.value = "";
   }
   if (visualization.value === "option2") {
-    inputValidation(textInput1, 5);
-    inputValidation(textInput3, 0, 460);
     textInput4.style.display = "none";
     textInput2.style.display = "none";
     description.textContent = description2;
@@ -59,14 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
     textInput3.value = "";
   }
   if (visualization.value === "option4") {
-    inputValidation(textInput3, 0, 460);
     textInput4.style.display = "none";
     textInput1.style.display = "none";
     description.textContent = description4;
   }
 
   if (visualization.value === "option5") {
-    inputValidation(textInput3, 0, 460);
     textInput4.style.display = "none";
     textInput2.style.display = "none";
     textInput1.style.display = "none";
@@ -76,6 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (count.value != 0) {
     results.style.display = "block";
   }
+  document
+    .getElementById("search_button")
+    .addEventListener("click", handleSubmit);
 });
 
 visualization.addEventListener("change", function () {
@@ -90,12 +90,9 @@ visualization.addEventListener("change", function () {
   textInput4.value = "";
 
   if (this.value === "option1") {
-    inputValidation(textInput1, 5);
     textInput1.style.display = "block";
     description.textContent = description1;
   } else if (this.value === "option2") {
-    inputValidation(textInput1, 5);
-    inputValidation(textInput3, 0, 460);
     textInput1.style.display = "block";
     textInput3.style.display = "block";
     description.textContent = description2;
@@ -103,58 +100,79 @@ visualization.addEventListener("change", function () {
     textInput4.style.display = "block";
     description.textContent = description3;
   } else if (this.value === "option4") {
-    inputValidation(textInput2, 10000);
-    inputValidation(textInput3, 0, 460);
     textInput3.style.display = "block";
     textInput2.style.display = "block";
     description.textContent = description4;
   } else if (this.value === "option5") {
-    inputValidation(textInput3, 0, 460);
     textInput3.style.display = "block";
     description.textContent = description5;
   }
 });
 
-function inputValidation(inputElement, minVal = null, maxVal = null) {
-  inputElement.addEventListener("keydown", function (event) {
-    var keyPressed = event.key;
-    var allowedKeys = [
-      "Backspace",
-      "ArrowLeft",
-      "ArrowRight",
-      "Delete",
-      "Enter",
-      "Tab",
-    ];
-
-    if (!/^\d$/.test(keyPressed) && !allowedKeys.includes(keyPressed)) {
-      event.preventDefault();
+allInputs.forEach(function (input) {
+  input.addEventListener("input", function (event) {
+    if (input !== textInput4) {
+      event.target.value = event.target.value.replace(/\D/g, "");
     }
   });
+});
 
-  inputElement.addEventListener("input", function () {
-    var inputValue = inputElement.value.trim();
+function handleSubmit() {
 
-    if (minVal != null && maxVal != null) {
-      if (
-        !/^\d+$/.test(inputValue) ||
-        inputValue < minVal ||
-        inputValue > maxVal
-      ) {
-        inputElement.setCustomValidity(
-          `Please enter a number between ${minVal} and ${maxVal}.`
-        );
-      } else {
-        inputElement.setCustomValidity("");
-      }
+  if (visualization.value === "option1") {
+    textInput1.setCustomValidity("");
+    if (textInput1.value === "") {
+      textInput1.setCustomValidity(`Please fill field`);
+      textInput1.reportValidity();
     } else {
-      if (!/^\d+$/.test(inputValue) || inputValue < minVal) {
-        inputElement.setCustomValidity(
-          `Please enter a number greater than ${minVal - 1}.`
-        );
-      } else {
-        inputElement.setCustomValidity("");
-      }
+      form.submit();
     }
-  });
+  } else if (visualization.value === "option2") {
+    textInput1.setCustomValidity("");
+    textInput3.setCustomValidity("");
+    if (textInput1.value === "") {
+      textInput1.setCustomValidity(`Please fill field`);
+      textInput1.reportValidity();
+    } else if (
+      textInput3.value === "" ||
+      textInput3.value > 460 ||
+      textInput3.value < 0
+    ) {
+      textInput3.focus();
+      textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
+      textInput3.reportValidity();
+    } else {
+      form.submit();
+    }
+  } else if (visualization.value === "option4") {
+    textInput2.setCustomValidity("");
+    textInput3.setCustomValidity("");
+    if (textInput2.value === "") {
+      textInput2.setCustomValidity(`Please fill field`);
+      textInput2.reportValidity();
+    } else if (
+      textInput3.value === "" ||
+      textInput3.value > 460 ||
+      textInput3.value < 0
+    ) {
+      textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
+      textInput3.reportValidity();
+    } else {
+      form.submit();
+    }
+  } else if (visualization.value === "option5") {
+    textInput3.setCustomValidity("");
+    if (
+      textInput3.value === "" ||
+      textInput3.value > 460 ||
+      textInput3.value < 0
+    ) {
+      textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
+      textInput3.reportValidity();
+    } else {
+      form.submit();
+    }
+  } else {
+    form.submit();
+  }
 }
