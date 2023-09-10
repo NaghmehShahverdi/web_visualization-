@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.views.generic import TemplateView
 from app.models import Cell
-
+from decimal import Decimal
 
 class Index(TemplateView):
     template_name = 'index.html'
@@ -50,8 +50,11 @@ class Index(TemplateView):
         else:
 
             filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True, spe_val__isnull=True,).values(
-                'cluster', 'name', 'spe_rank', 'scz_2022_p_log', 'spe_val')
+                'cluster', 'name', 'gene', 'spe_rank', 'scz_2022_p', 'scz_2022_p_log', 'spe_val')
             count = filtered_genes.count()
+
+            for result in filtered_genes: # format as scientific notation
+                result['scz_2022_p'] = "{:.3E}".format(Decimal(result['scz_2022_p']))
 
         context['count'] = count
         context['results'] = filtered_genes

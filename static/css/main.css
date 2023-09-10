@@ -28,7 +28,7 @@ body {
 #container {
   /* display: grid; */
   /* justify-content: center; */
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
 }
@@ -92,6 +92,18 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background-color: #2ac0ac;
+}
+
+#download_button {
+  padding: 5px 15px;
+  margin-top: 10px;
+  border: 1px solid #1b9d8c;
+  background-color: rgba(16, 89, 80, 0.671);
+  cursor: pointer;
+  color: #fff;
+  -webkit-transition: background 300ms;
+  transition: background 300ms;
+  height: 30px;
 }
 
 #results {

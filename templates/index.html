@@ -23,7 +23,7 @@
       p-values, specificity ranks, or gene names.
 
       To sort tables by a specific column, simply click on the column header. Clicking the column header again will
-      reverse the sort order. For information on a specific gene or value, use the search box located above the table.
+      reverse the sort order. For information on a specific gene or value, use the search box located above the table. 
       </h3>
   </div>
   <div id="container">
@@ -53,19 +53,55 @@
         <ul id="suggestionList"></ul>
       </div>
     </form>
-    <div id="description">
-    </div>
+    <span>
+      <div id="description"> </div>
+      <div id = "download_button_container"> </div>
+    </span>
 
     <div id="results"></div>
   </div>
 
 
-
-
-
   <script src="{% static 'js/table.js' %}"></script>
 
   <script>
+    var gridData = [];
+    var gridColumns = [];
+    
+    {% if visualization == 'option1' %}
+      gridColumns = ["Name", "Gene Number", "Cluster", "Specificity Rank", "Specificity Value"];
+      {% for item in results %}
+        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+      {% endfor %}
+    {% endif %}
+    {% if visualization == 'option2' %}
+      gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
+      {% for item in results %}
+        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+        {% endfor %}
+    {% endif %}
+    {% if visualization == 'option3' %}
+      gridColumns = ["Cluster", "Gene Number", "Specificity Rank", "Specificity Value"];
+      {% for item in results %}
+        gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+      {% endfor %}
+    {% endif %}
+    {% if visualization == 'option4' %}
+      gridColumns = ["Name",  "Gene Number", "-log (p-Value)", "Specificity Rank", "Specificity Value"];
+      {% for item in results %}
+        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.scz_2022_p_log }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+        {% endfor %}
+    {% endif %}
+    {% if visualization == 'option5' %}
+      gridColumns = ["Name", "Gene Number", "p-Value", "-log (p-Value)", "Specificity Rank", "Specificity Value"];
+      {% for item in results %}
+        gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.scz_2022_p}}, {{ item.scz_2022_p_log }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+        {% endfor %}
+    {% endif %}
+
+    {% if visualization != 'option0' %}
+      document.addEventListener('DOMContentLoaded', function () {setDownloadInfo (gridColumns, gridData)})
+    {% endif %}
 
     new gridjs.Grid({
       pagination: {
@@ -75,46 +111,8 @@
       sort: true,
       fixedHeader: true,
       search: true,
-      {% if visualization == 'option1' %}
-    columns: ["Name", "Cluster", "SPE_Rank", "SPE_Value"],
-      data: [
-        {% for item in results %}
-    ["{{ item.name }}", {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}],
-      {% endfor %}
-      ],
-    {% endif %}
-    {% if visualization == 'option2' %}
-    columns: ["Name", "SPE_Rank", "SPE_Value"],
-      data: [
-        {% for item in results %}
-    ["{{ item.name }}", {{ item.spe_rank }}, {{ item.spe_val }}],
-      {% endfor %}
-      ],
-    {% endif %}
-    {% if visualization == 'option3' %}
-    columns: ["Cluster", "SPE_Rank", "SPE_Value"],
-      data: [
-        {% for item in results %}
-    [{{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}],
-      {% endfor %}
-      ],
-    {% endif %}
-    {% if visualization == 'option4' %}
-    columns: ["Name", "-log (p-Value)", "SPE_Value"],
-      data: [
-        {% for item in results %}
-    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_val }}],
-      {% endfor %}
-      ],
-    {% endif %}
-    {% if visualization == 'option5' %}
-    columns: ["Name", "-log (p-Value)", "SPE_Rank", "SPE_Value"],
-      data: [
-        {% for item in results %}
-    ["{{ item.name }}", {{ item.scz_2022_p_log }}, {{ item.spe_rank }}, {{ item.spe_val }}],
-      {% endfor %}
-      ],
-    {% endif %}
+      columns: gridColumns,
+      data: gridData,
     style: {
       table: {
         'border': '2px solid rgb(39, 42, 47)',
@@ -142,6 +140,7 @@
 
   <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'js/gene_filter.js' %}"></script>
+  <script src="{% static 'js/csv.js' %}"></script>
 </body>
 
 </html>

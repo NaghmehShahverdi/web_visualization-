@@ -14,15 +14,15 @@ const textInput3 = document.getElementById("textInput3"); // Cluster ID
 const textInput4 = document.getElementById("textInput4"); // Gene
 
 const description1 =
-  "Enter your desired -log(p-value) threshold  to view a table featuring gene names, their specificity, and corresponding p-values.";
+  "Enter your desired -log(p-value) threshold to view a table featuring gene names, their specificity, and corresponding p-values.";
 const description2 =
-  "By entering your desired p-value threshold and choosing a cluster ID, our table format displays  gene specificity within that selected cluster.";
+  "By entering your desired p-value threshold and choosing a cluster ID, our table format displays gene specificity within that selected cluster.";
 const description3 =
   "Input a gene name to understand its specificity across various clusters.";
 const description4 =
-  "By entering your desired specificity-rank threshold and choosing a cluster ID, our table format displays  gene p-value within that cluster.";
+  "By entering your desired specificity-rank threshold and choosing a cluster ID, our table format displays gene p-value within that cluster.";
 const description5 =
-  "Input the cluster ID, and the table will exhibit the p-value and specificity rank for each gene.";
+  "Input the cluster ID (0-460), and the table will exhibit the p-value and specificity rank for each gene.";
 
 document.addEventListener("DOMContentLoaded", function () {
   lazy_load.style.display = "none";

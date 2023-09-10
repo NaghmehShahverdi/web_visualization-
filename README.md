@@ -14,7 +14,7 @@ python manage.py insert_data
 docker-compose -f docker-compose-local.yml up -d --build
 ```
 
-
+If you have errors testing changes on localhost, you may need to clear the browser cache
 
 ### To run in production mode. (Run on a web server using port 443)
 ```
