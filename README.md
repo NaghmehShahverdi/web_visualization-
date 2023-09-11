@@ -20,3 +20,8 @@ If you have errors testing changes on localhost, you may need to clear the brows
 ```
 docker-compose up -d --build
 ```
+
+### To deploy to the server, push to master and run
+```
+sh update_server.sh
+```
