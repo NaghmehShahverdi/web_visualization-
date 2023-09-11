@@ -50,7 +50,7 @@ class Index(TemplateView):
         else:
 
             filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True, spe_val__isnull=True,).values(
-                'cluster', 'name', 'gene', 'spe_rank', 'scz_2022_p', 'scz_2022_p_log', 'spe_val')
+                'cluster', 'name', 'gene', 'spe_rank', 'scz_2022_p', 'scz_2022_p_log', 'spe_val').order_by('-spe_val')
             count = filtered_genes.count()
 
             for result in filtered_genes: # format as scientific notation

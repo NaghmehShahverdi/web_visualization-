@@ -23,7 +23,7 @@
       p-values, specificity ranks, or gene names.
 
       To sort tables by a specific column, simply click on the column header. Clicking the column header again will
-      reverse the sort order. For information on a specific gene or value, use the search box located above the table. 
+      reverse the sort order. For information on a specific gene or value, use the search box located above the table.
       </h3>
   </div>
   <div id="container">
@@ -67,7 +67,7 @@
   <script>
     var gridData = [];
     var gridColumns = [];
-    
+
     {% if visualization == 'option1' %}
       gridColumns = ["Name", "Gene Number", "Cluster", "Specificity Rank", "Specificity Value"];
       {% for item in results %}
