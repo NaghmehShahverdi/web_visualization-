@@ -3,6 +3,7 @@ const container = document.getElementById("container");
 const search_filter = document.getElementById("search_filter");
 const lazy_load = document.getElementById("lazy_load");
 const results = document.getElementById("results");
+const dl_and_desc = document.getElementById("dl_and_desc");
 const form = document.getElementById("form");
 const description = document.getElementById("description");
 const count = document.getElementById("count");
@@ -25,7 +26,6 @@ const description5 =
   "Input the cluster ID (0-460), and the table will exhibit the p-value and specificity rank for each gene.";
 
 document.addEventListener("DOMContentLoaded", function () {
-  lazy_load.style.display = "none";
   search_filter.style.display = "flex";
 
   if (visualization.value === "option0") {
@@ -118,13 +118,15 @@ allInputs.forEach(function (input) {
 });
 
 function handleSubmit() {
-
   if (visualization.value === "option1") {
     textInput1.setCustomValidity("");
     if (textInput1.value === "") {
       textInput1.setCustomValidity(`Please fill field`);
       textInput1.reportValidity();
     } else {
+      results.style.display = "none";
+      dl_and_desc.style.display = "none";
+      lazy_load.style.display = "block";
       form.submit();
     }
   } else if (visualization.value === "option2") {
@@ -142,6 +144,9 @@ function handleSubmit() {
       textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
       textInput3.reportValidity();
     } else {
+      results.style.display = "none";
+      dl_and_desc.style.display = "none";
+      lazy_load.style.display = "block";
       form.submit();
     }
   } else if (visualization.value === "option4") {
@@ -158,6 +163,9 @@ function handleSubmit() {
       textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
       textInput3.reportValidity();
     } else {
+      results.style.display = "none";
+      dl_and_desc.style.display = "none";
+      lazy_load.style.display = "block";
       form.submit();
     }
   } else if (visualization.value === "option5") {
@@ -170,9 +178,15 @@ function handleSubmit() {
       textInput3.setCustomValidity(`Please enter a number between 0 and 460`);
       textInput3.reportValidity();
     } else {
+      results.style.display = "none";
+      dl_and_desc.style.display = "none";
+      lazy_load.style.display = "block";
       form.submit();
     }
   } else {
+    results.style.display = "none";
+    dl_and_desc.style.display = "none";
+    lazy_load.style.display = "block";
     form.submit();
   }
 }

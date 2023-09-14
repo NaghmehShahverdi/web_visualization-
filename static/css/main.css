@@ -40,9 +40,21 @@ body {
 }
 
 #lazy_load {
-  display: block;
+  display: none;
   color: #fff;
   font-size: 2em;
+  text-align: center;
+  margin: 70px auto;
+}
+
+#lazy_load > svg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: inline-block;
+}
+#lazy_load > P {
+  letter-spacing: 8px;
 }
 
 .dropdown {
@@ -147,6 +159,33 @@ input[type="submit"]:hover {
   line-height: 23px;
 }
 
+#form {
+  position: relative;
+}
+
+#suggestionList {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #424141;
+  border-top: none;
+  position: absolute;
+  background-color: rgba(11, 11, 11, 0.9);
+  overflow-y: auto;
+  right: 0;
+  margin: 208px 109px 0 0;
+  width: 234px;
+  color: #fff;
+  height: 160px;
+  display: none;
+}
+#suggestionList li {
+  padding: 8px;
+  cursor: pointer;
+}
+#suggestionList li:hover {
+  background-color: rgba(16, 89, 80, 0.67);
+}
+
 .gridjs-wrapper {
   border-radius: 0 !important;
 }
@@ -188,31 +227,4 @@ input[type="submit"]:hover {
     margin: 106px 0px 0 0 !important;
     width: 100% !important;
   }
-}
-
-#form {
-  position: relative;
-}
-
-#suggestionList {
-  list-style-type: none;
-  padding: 0;
-  border: 1px solid #424141;
-  border-top: none;
-  position: absolute;
-  background-color: rgba(11, 11, 11, 0.9);
-  overflow-y: auto;
-  right: 0;
-  margin: 208px 109px 0 0;
-  width: 234px;
-  color: #fff;
-  height: 160px;
-  display: none;
-}
-#suggestionList li {
-  padding: 8px;
-  cursor: pointer;
-}
-#suggestionList li:hover {
-  background-color: rgba(16, 89, 80, 0.67);
 }
