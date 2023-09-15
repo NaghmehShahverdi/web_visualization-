@@ -198,6 +198,13 @@ input[type="submit"]:hover {
   box-shadow: none !important;
 }
 
+.super-cluster{
+  width: 60px;
+  height: 20px;
+  background-color: #0ecab1;
+  display: inline-block;
+}
+
 @media (max-width: 768px) {
   #search_filter {
     flex-direction: column !important;

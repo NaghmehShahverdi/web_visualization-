@@ -3,6 +3,8 @@
 
 <head>
   {% load static %}
+  {% load custom_filters %}
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -96,6 +98,7 @@
     </svg></span>
 
     <div id="results"></div>
+
   </div>
 
 
@@ -118,9 +121,11 @@
         {% endfor %}
     {% endif %}
     {% if visualization == 'option3' %}
-      gridColumns = ["Cluster", "Gene Number", "Specificity Rank", "Specificity Value"];
+      gridColumns = ["Cluster", "Gene Number", "Specificity Rank", "Specificity Value", "Super Cluster", {name:"color",sort:false}];
       {% for item in results %}
-        gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+        gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}" , gridjs.html(
+          `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
+        )]);
       {% endfor %}
     {% endif %}
     {% if visualization == 'option4' %}
@@ -130,9 +135,11 @@
         {% endfor %}
     {% endif %}
     {% if visualization == 'option5' %}
-      gridColumns = ["Name", "Gene Number", "p-Value", "Specificity Rank", "Specificity Value"];
-      {% for item in results %}
-        gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.scz_2022_p}}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    gridColumns = ["Name", "Gene Number", "p-Value", "Specificity Rank", "Specificity Value", "Super Cluster", {name:"color",sort:false}];
+    {% for item in results %}
+        gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.scz_2022_p}}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
+          `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
+        )]);
         {% endfor %}
     {% endif %}
 
