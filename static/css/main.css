@@ -185,7 +185,29 @@ input[type="submit"]:hover {
 #suggestionList li:hover {
   background-color: rgba(16, 89, 80, 0.67);
 }
+#additional_info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 1.3em;
+  margin: 40px 0 -40px 0;
+}
+#additional_info > b {
+  margin-right: 15px;
+}
 
+.additional-info-color {
+  width: 90px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.additional-info-sc {
+  margin-right: 50px;
+}
 .gridjs-wrapper {
   border-radius: 0 !important;
 }
@@ -198,7 +220,7 @@ input[type="submit"]:hover {
   box-shadow: none !important;
 }
 
-.super-cluster{
+.super-cluster {
   width: 60px;
   height: 20px;
   background-color: #0ecab1;

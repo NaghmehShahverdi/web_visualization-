@@ -50,7 +50,8 @@ class Index(TemplateView):
             filtered_genes = []
         else:
 
-            filtered_genes = Cell.objects.filter(query).exclude(spe_rank__isnull=True, spe_val__isnull=True).order_by('-spe_val')
+            filtered_genes = Cell.objects.filter(query).exclude(
+                spe_rank__isnull=True, spe_val__isnull=True).order_by('-spe_val')
             count = filtered_genes.count()
 
             for result in filtered_genes:  # format as scientific notation
@@ -58,5 +59,18 @@ class Index(TemplateView):
 
         context['count'] = count
         context['results'] = filtered_genes
+        context['columns_desc'] = {
+            "cluster": "description for cluster . . .",
+            "gene_number": "description for gene_number . . .",
+            "specificity_rank": "description for specificity_rank . . .",
+            "specificity_value": "description for specificity_value . . .",
+            "super_cluster": "description for super_cluster . . .",
+            "color": "description for color . . .",
+            "name": "description for name . . .",
+            "p_value": "description for p_value . . .",
+        }
+        if visualization == 'option5':
+            super_cluster = str(filtered_genes.first().get_cluster_display()).split('#')
+            context['additional_info'] = f'<b>Super Cluster: </b><span class="additional-info-sc">{super_cluster[0]}</span><b>Color: </b><span style="background-color:#{super_cluster[1]}" class="additional-info-color"></span>'
 
         return context

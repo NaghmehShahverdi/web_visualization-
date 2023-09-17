@@ -56,47 +56,30 @@
     </form>
     <span id="dl_and_desc">
       <div id="description"> </div>
-      <div id = "download_button_container"> </div>
+      <div id="download_button_container"> </div>
     </span>
     <span id="lazy_load">
       <p>LOADING</p>
-      <svg version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-      viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-     <path fill="#fff" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+      <svg version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+        y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+        <path fill="#fff" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
       c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z">
-          <animateTransform 
-             attributeName="transform" 
-             attributeType="XML" 
-             type="rotate"
-             dur="2s" 
-             from="0 50 50"
-             to="360 50 50" 
-             repeatCount="indefinite" />
-      </path>
-     <path fill="#fff" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+          <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="2s" from="0 50 50"
+            to="360 50 50" repeatCount="indefinite" />
+        </path>
+        <path fill="#fff" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
       c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z">
-          <animateTransform 
-             attributeName="transform" 
-             attributeType="XML" 
-             type="rotate"
-             dur="1s" 
-             from="0 50 50"
-             to="-360 50 50" 
-             repeatCount="indefinite" />
-      </path>
-     <path fill="#fff" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+          <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50"
+            to="-360 50 50" repeatCount="indefinite" />
+        </path>
+        <path fill="#fff" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
       L82,35.7z">
-          <animateTransform 
-             attributeName="transform" 
-             attributeType="XML" 
-             type="rotate"
-             dur="2s" 
-             from="0 50 50"
-             to="360 50 50" 
-             repeatCount="indefinite" />
-      </path>
-    </svg></span>
-
+          <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="2s" from="0 50 50"
+            to="360 50 50" repeatCount="indefinite" />
+        </path>
+      </svg>
+    </span>
+    <div id="additional_info"></div>
     <div id="results"></div>
 
   </div>
@@ -105,46 +88,57 @@
   <script src="{% static 'js/table.js' %}"></script>
 
   <script>
+    const parser = new DOMParser();
+    const doc = parser.parseFromString("{{ additional_info }}", 'text/html');
+    additional_info.innerHTML = doc.body.textContent;;
+
     var gridData = [];
     var gridColumns = [];
 
     {% if visualization == 'option1' %}
-      gridColumns = ["Name", "Gene Number", "Cluster", "Specificity Rank", "Specificity Value"];
-      {% for item in results %}
-        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-      {% endfor %}
+    gridColumns = ["Name", "Gene Number", "Cluster", "Specificity Rank", "Specificity Value"];
+    {% for item in results %}
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    {% endfor %}
     {% endif %}
     {% if visualization == 'option2' %}
-      gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
-      {% for item in results %}
-        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-        {% endfor %}
+    gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
+    {% for item in results %}
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    {% endfor %}
     {% endif %}
     {% if visualization == 'option3' %}
-      gridColumns = ["Cluster", "Gene Number", "Specificity Rank", "Specificity Value", "Super Cluster", {name:"color",sort:false}];
-      {% for item in results %}
-        gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}" , gridjs.html(
-          `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
-        )]);
-      {% endfor %}
+    gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cluster</div>') },
+    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
+    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
+    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') },
+    { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Super Cluster</div>') },
+    { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
+    {% for item in results %}
+    gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
+      `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
+    )]);
+    {% endfor %}
     {% endif %}
     {% if visualization == 'option4' %}
-      gridColumns = ["Name",  "Gene Number",  "Specificity Rank", "Specificity Value"];
-      {% for item in results %}
-        gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-        {% endfor %}
+    gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
+    {% for item in results %}
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    {% endfor %}
     {% endif %}
     {% if visualization == 'option5' %}
-    gridColumns = ["Name", "Gene Number", "p-Value", "Specificity Rank", "Specificity Value", "Super Cluster", {name:"color",sort:false}];
+    gridColumns = [{ id: "name", name: gridjs.html('<div title="{{ columns_desc.name }}">Name</div>') },
+    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
+    { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">p-Value</div>') },
+    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
+    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') }]
     {% for item in results %}
-        gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.scz_2022_p}}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
-          `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
-        )]);
-        {% endfor %}
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.scz_2022_p }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    {% endfor %}
     {% endif %}
 
     {% if visualization != 'option0' %}
-      document.addEventListener('DOMContentLoaded', function () {setDownloadInfo (gridColumns, gridData)})
+    document.addEventListener('DOMContentLoaded', function () { setDownloadInfo(gridColumns, gridData) })
     {% endif %}
 
     new gridjs.Grid({
@@ -158,24 +152,24 @@
       search: true,
       columns: gridColumns,
       data: gridData,
-    style: {
-      table: {
-        'border': '2px solid rgb(39, 42, 47)',
+      style: {
+        table: {
+          'border': '2px solid rgb(39, 42, 47)',
           'background-color': 'rgba(0, 0, 0, 0)'
-      },
-      th: {
-        'color': '#fff',
+        },
+        th: {
+          'color': '#fff',
           'border': '2px solid #1b9d8c',
-            'text-align': 'center',
-              'background-color': 'rgba(16, 89, 80, 0.671)'
-      },
-      td: {
-        'background-color': '#080c13',
           'text-align': 'center',
-            'color': 'rgb(144, 167, 174)',
-              'border': '2px solid rgb(39, 42, 47)',
+          'background-color': 'rgba(16, 89, 80, 0.671)'
+        },
+        td: {
+          'background-color': '#080c13',
+          'text-align': 'center',
+          'color': 'rgb(144, 167, 174)',
+          'border': '2px solid rgb(39, 42, 47)',
+        }
       }
-    }
     }).render(document.getElementById("results"));
 
 

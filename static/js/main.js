@@ -2,6 +2,7 @@ const allInputs = document.querySelectorAll('input[type="text"]');
 const container = document.getElementById("container");
 const search_filter = document.getElementById("search_filter");
 const lazy_load = document.getElementById("lazy_load");
+const additional_info = document.getElementById("additional_info");
 const results = document.getElementById("results");
 const dl_and_desc = document.getElementById("dl_and_desc");
 const form = document.getElementById("form");
@@ -118,6 +119,7 @@ allInputs.forEach(function (input) {
 });
 
 function handleSubmit() {
+  additional_info.innerHTML = "";
   if (visualization.value === "option1") {
     textInput1.setCustomValidity("");
     if (textInput1.value === "") {
