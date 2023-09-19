@@ -121,7 +121,7 @@ input[type="submit"]:hover {
 #results {
   display: none;
   width: 100%;
-  min-height: 500px;
+  /* min-height: 500px; */
   text-align: center;
   color: #fff;
   margin-top: 50px;
@@ -203,6 +203,7 @@ input[type="submit"]:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #fff;
 }
 
 .additional-info-sc {
