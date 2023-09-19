@@ -227,15 +227,16 @@ input[type="submit"]:hover {
   display: inline-block;
 }
 
+.graph {
+  width: 100% !important;
+}
+
 @media (max-width: 768px) {
   #search_filter {
     flex-direction: column !important;
     align-items: initial !important;
     margin-bottom: 10px !important;
     gap: 5px !important;
-    width: 100% !important;
-  }
-  .graph {
     width: 100% !important;
   }
   input[type="text"] {

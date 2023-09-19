@@ -46,19 +46,19 @@ function downloadCSV() {
   const _gene = urlParams.get("gene"); // Gene
   const _visualization = urlParams.get("visualization"); // Gene
 
-  if (_visualization === "option1") {
+  if (_visualization === "option3") {
     title = `Cluster-Specific Based on -log(p-value) threshold ${_log_p_val}`;
   }
   if (_visualization === "option2") {
     title = `Gene Specificity in Cluster ${_cluster} (with -log(P-Value) threshold ${_log_p_val})`;
   }
-  if (_visualization === "option3") {
+  if (_visualization === "option2") {
     title = `Specificity Profile of Gene ${_gene} Across Clusters`;
   }
   if (_visualization === "option4") {
     title = `Gene P-value in Cluster ${_cluster} (with specificity rank threshold ${_spe_rank})`;
   }
-  if (_visualization === "option5") {
+  if (_visualization === "option1") {
     title = `Cluster ${_cluster} Information`;
   }
 

@@ -33,23 +33,14 @@
       <div id="search_filter">
         <select id="visualization" class="dropdown" name="visualization">
           <option value="option0" selected hidden disabled>Select Option</option>
-          <option value="option5" {% if visualization == 'option5' %}selected{% endif %}>Cluster Information</option>
-          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Specificity Profile of a Gene
+          <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cluster Information</option>
+          <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Specificity Profile of a Gene
             Across Clusters</option>
-          <!-- <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cluster-Specific Based
-            on -log(p-value)</option> -->
-          <!-- <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene Specificity in Selected
-            Cluster
-          </option>
-          <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Gene P-value in Selected Cluster
-          </option> -->
+          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene Expression Specificity Across Clusters</option>
         </select>
 
-        <input name="scz_2022_p" type="text" id="textInput1" placeholder="-log(P-Value) Threshold"
-          value="{{ scz_2022_p }}">
-        <input name="spe_rank" type="text" id="textInput2" placeholder="Specificity Rank" value="{{ spe_rank }}">
-        <input name="cluster" type="text" id="textInput3" placeholder="Cluster ID" value="{{ cluster }}">
-        <input name="gene" type="text" id="textInput4" placeholder="Gene" value="{{ gene }}" autocomplete="off">
+        <input name="cluster" type="text" id="input_cluster_id" placeholder="Cluster ID" value="{{ cluster }}">
+        <input name="gene" type="text" id="input_gene" placeholder="Gene" value="{{ gene }}" autocomplete="off">
         <input id="search_button" type="submit" value="search">
         <ul id="suggestionList"></ul>
       </div>
@@ -95,19 +86,9 @@
     var gridData = [];
     var gridColumns = [];
 
-    {% if visualization == 'option1' %}
-    gridColumns = ["Name", "Gene Number", "Cluster", "Specificity Rank", "Specificity Value"];
-    {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.cluster }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-    {% endfor %}
-    {% endif %}
-    {% if visualization == 'option2' %}
-    gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
-    {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-    {% endfor %}
-    {% endif %}
     {% if visualization == 'option3' %}
+    results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
+    {% elif visualization == 'option2' %}
     gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cluster</div>') },
     { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
     { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
@@ -119,14 +100,7 @@
       `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
     )]);
     {% endfor %}
-    {% endif %}
-    {% if visualization == 'option4' %}
-    gridColumns = ["Name", "Gene Number", "Specificity Rank", "Specificity Value"];
-    {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
-    {% endfor %}
-    {% endif %}
-    {% if visualization == 'option5' %}
+    {% elif visualization == 'option1' %}
     gridColumns = [{ id: "name", name: gridjs.html('<div title="{{ columns_desc.name }}">Name</div>') },
     { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">p-Value</div>') },
