@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (count.value != 0 && count.value != "None") {
     results.style.display = "block";
   }else if (count.value == 0){
-    results.innerHTML='<p class="not-found">The specificity value for this gene is\'t available!</p>'
+    results.innerHTML='<p class="not-found">The specificity value for this gene isn\'t available!</p>'
     results.style.display = "block";
   }
   document
