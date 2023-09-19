@@ -231,6 +231,17 @@ input[type="submit"]:hover {
   width: 100% !important;
 }
 
+.not-found {
+  color: #e4dfdf;
+  background-color: #2d5db9;
+  padding: 10px;
+  border: 2px solid #e4dfdf;
+  border-radius: 11px;
+  width: 60%;
+  margin: 100px auto;
+  font-size: 1.4em;
+}
+
 @media (max-width: 768px) {
   #search_filter {
     flex-direction: column !important;
@@ -256,5 +267,9 @@ input[type="submit"]:hover {
   #suggestionList {
     margin: 106px 0px 0 0 !important;
     width: 100% !important;
+  }
+  .not-found{
+    width: 100% !important;
+    font-size: 1em !important;
   }
 }

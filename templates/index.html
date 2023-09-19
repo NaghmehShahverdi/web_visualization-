@@ -83,9 +83,9 @@
     const doc = parser.parseFromString("{{ additional_info }}", 'text/html');
     additional_info.innerHTML = doc.body.textContent;;
 
+    {% if count != 0 and count != None %}
     var gridData = [];
     var gridColumns = [];
-
     {% if visualization == 'option3' %}
     results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
     {% elif visualization == 'option2' %}
@@ -146,6 +146,7 @@
       }
     }).render(document.getElementById("results"));
 
+    {% endif %}
 
   </script>
 

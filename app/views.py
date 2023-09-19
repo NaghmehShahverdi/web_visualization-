@@ -10,7 +10,7 @@ class Index(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
-        param, query, count = self.request.GET, Q(), 0
+        param, query, count = self.request.GET, Q(), None
 
         gene = param.get('gene', '')
         cluster = param.get('cluster', '')

@@ -8,6 +8,8 @@ from app.models import CLUSTER as cluster_labels
 
 
 def generate_graph(filtered_genes):
+    if len(filtered_genes) <= 0:
+        return None
 
     cluster_colors, super_cluster, legend_handles, added_colors = [], [], [], set()
 
