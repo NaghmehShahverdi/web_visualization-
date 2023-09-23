@@ -43,7 +43,7 @@ class Index(TemplateView):
 
         if visualization == 'option3':
             context['results'] = generate_graph(query.values(
-                'cluster', 'spe_rank').order_by('cluster'))
+                'cluster', 'spe_val').order_by('cluster'))
 
         else:
             context['results'] = query.order_by('-spe_val')

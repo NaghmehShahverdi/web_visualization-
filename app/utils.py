@@ -14,7 +14,7 @@ def generate_graph(filtered_genes):
     cluster_colors, super_cluster, legend_handles, added_colors = [], [], [], set()
 
     df = pd.DataFrame.from_records(filtered_genes)
-    df['spe_rank'] = df['spe_rank'].fillna(0)
+    df['spe_val'] = df['spe_val'].fillna(0)
 
     for i, j in enumerate(cluster_labels):
         cluster_colors.append('#'+str(cluster_labels[i][1].split('#')[1]))
@@ -22,10 +22,10 @@ def generate_graph(filtered_genes):
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 7))
 
-    ax1.bar(df['cluster'], df['spe_rank'], color=cluster_colors, width=1)
+    ax1.bar(df['cluster'], df['spe_val'], color=cluster_colors, width=1)
 
     ax1.set_xlabel('Cluster ID')
-    ax1.set_ylabel('Specificity Rank')
+    ax1.set_ylabel('Specificity Value')
     ax1.spines['right'].set_visible(False)
     ax1.spines['top'].set_visible(False)
     ax1.spines['left'].set_visible(False)
