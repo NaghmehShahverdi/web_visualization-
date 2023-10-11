@@ -56,49 +56,33 @@ def generate_graph(filtered_genes):
     df['cluster'] = df['cluster'].astype(str)
     df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + super_cluster
     # Create a custom legend for superclusters
-    custom_legend = [
-        dict(
-            label=super_cluster[i],
-            method='update',
-            args=[{'visible': [True if x == i else False for x in range(len(super_cluster))]}, {'title': super_cluster[i]}],
-        )
-        for i in range(len(super_cluster))
-    ]
+
 
     traces = []
 
     for i in range(len(super_cluster)):
         mask = [True if x == i else False for x in range(len(super_cluster))]
+
+        # Only show the legend entry for the first trace in each supercluster
+        show_legend = i == super_cluster.index(super_cluster[i])
+
         trace = go.Bar(
             x=df['cluster'][mask],
             y=df['spe_val'][mask],
-            name=super_cluster[i],
-            text=df['hovertext'][mask],  # Set text to hovertext
-            hoverinfo='text+y',  # Show hovertext and y value when hovering
+            name=super_cluster[i] if show_legend else '',  # Set the name for the first trace only
+            text=df['hovertext'][mask],  # Set text to an empty string
+            hoverinfo='y+text',  # Show y value and text when hovering
             marker=dict(color=cluster_colors[i]),
             textposition='inside',
-            textfont=dict(color=cluster_colors[i]) 
+            textfont=dict(color=cluster_colors[i]),
+            showlegend=show_legend,  # Control legend visibility
         )
+
         traces.append(trace)
 
-    layout = go.Layout(
-        barmode='group',
-        xaxis=dict(type='category'),
-        updatemenus=[
-            {
-                'buttons': custom_legend,
-                'direction': 'down',
-                'showactive': True,
-                'x': 0.15,
-                'xanchor': 'left',
-                'y': 1.15,
-                'yanchor': 'top',
-            }
-        ],
 
-    )
+    fig = go.Figure(data=traces)
 
-    fig = go.Figure(data=traces, layout=layout)
 
     plot_html = fig.to_html(full_html=True,default_width='100%')
 
