@@ -294,8 +294,8 @@ input[type="submit"]:hover {
     font-size: 1em !important;
   }
 
-  .js-plotly-plot,
+  /* .js-plotly-plot,
   .plot-container {
     width: 100% !important;
-  }
+  } */
 }
