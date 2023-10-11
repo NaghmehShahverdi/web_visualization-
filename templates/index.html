@@ -4,28 +4,29 @@
 <head>
   {% load static %}
   {% load custom_filters %}
+  
+
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   <link rel="stylesheet" href="{% static 'css/table.css' %}" />
-
+  <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>  -->
+  
 
   <title>Search and Filter Template</title>
 </head>
+
 
 <body>
   <div class="dark-overlay"></div>
   <input type="hidden" id="count" value="{{ count }}">
   <div class="content">
     <p><a href="/">Mapping Schizophrenia's Cellular Etiology: Integrating snRNAseq and GWASs</a></p>
-    <h3p>Welcome to our platform, where we offer four specialized tables that allow you to explore gene specificity
-      ranks and their p-values in relation to schizophrenia. Tables can be tailored based on different thresholds for
-      p-values, specificity ranks, or gene names.
-
-      To sort tables by a specific column, simply click on the column header. Clicking the column header again will
-      reverse the sort order. For information on a specific gene or value, use the search box located above the table.
+    <h3p>Welcome to our platform, where we offer four specialized search options that allow you to cell types, gene specificity 
+      across cell types, and phenotypic associations for schizophrenia and other polygenic phenotypes. To sort tables by a specific 
+      column, simply click on the column header. Clicking the column header again will reverse the sort order. For information on a specific gene or value, use the search box located above the table.
       </h3>
   </div>
   <div id="container">
@@ -33,10 +34,9 @@
       <div id="search_filter">
         <select id="visualization" class="dropdown" name="visualization">
           <option value="option0" selected hidden disabled>Select Option</option>
-          <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cluster Information</option>
-          <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Specificity Profile of a Gene
-            Across Clusters</option>
-          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene Expression Specificity Across Clusters</option>
+          <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cell type Information</option>
+          <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene specificity across clusters - tabular view</option>
+          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters - barplot</option>
         </select>
 
         <input name="cluster" type="text" id="input_cluster_id" placeholder="Cluster ID" value="{{ cluster }}">
@@ -71,7 +71,11 @@
       </svg>
     </span>
     <div id="additional_info"></div>
-    <div id="results"></div>
+    <div id="results">{% if graph %}
+      {{ graph|safe }}
+      {% endif %}</div>
+
+    
 
   </div>
 
@@ -87,27 +91,37 @@
     var gridData = [];
     var gridColumns = [];
     {% if visualization == 'option3' %}
-    results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
+     
+    // results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
+
     {% elif visualization == 'option2' %}
-    gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cluster</div>') },
-    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
+    gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cell type</div>') },
+    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI gene number</div>') },
+    {id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') },
     { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
-    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') },
-    { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Super Cluster</div>') },
+    { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Supercluster</div>') },
     { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
     {% for item in results %}
-    gridData.push([{{ item.cluster }}, {{ item.gene }}, {{ item.spe_rank }}, {{ item.spe_val }}, "{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
+    gridData.push([{{ item.cluster }}, {{ item.gene }}, {% round_decimal item.spe_val %},{{ item.spe_rank }},"{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
       `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
     )]);
     {% endfor %}
+  
+    
+
     {% elif visualization == 'option1' %}
+    
     gridColumns = [{ id: "name", name: gridjs.html('<div title="{{ columns_desc.name }}">Name</div>') },
-    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Gene Number</div>') },
-    { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">p-Value</div>') },
-    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
-    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') }]
+    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI</br>gene number</div>') },
+    { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
+    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Rank</div>') },
+    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Value</div>') },
+    {id:  "chr", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Chromosome</div>') },
+    {id:  "start", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Start</br>Position</div>') },
+    {id:  "stop", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">End</br>Position</div>') }]
     {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.scz_2022_p }}, {{ item.spe_rank }}, {{ item.spe_val }}]);
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {{item.chr}},{{item.start}},{{item.stop}}]);
+
     {% endfor %}
     {% endif %}
 
@@ -130,12 +144,15 @@
         table: {
           'border': '2px solid rgb(39, 42, 47)',
           'background-color': 'rgba(0, 0, 0, 0)'
+          
         },
+
         th: {
           'color': '#fff',
           'border': '2px solid #1b9d8c',
           'text-align': 'center',
-          'background-color': 'rgba(16, 89, 80, 0.671)'
+          'background-color': 'rgba(16, 89, 80, 0.671)',
+          'font-size':'12px'
         },
         td: {
           'background-color': '#080c13',

@@ -38,11 +38,10 @@ class Index(TemplateView):
                 spe_rank__isnull=True, spe_val__isnull=True)
             context['count'] = query.count()
 
-            for result in query:  # format as scientific notation
-                result.scz_2022_p = "{:.3E}".format(Decimal(result.scz_2022_p))
+
 
         if visualization == 'option3':
-            context['results'] = generate_graph(query.values(
+            context['graph'] = generate_graph(query.values(
                 'cluster', 'spe_val').order_by('cluster'))
 
         else:

@@ -47,13 +47,14 @@ body {
   margin: 70px auto;
 }
 
-#lazy_load > svg {
+#lazy_load>svg {
   width: 100px;
   height: 100px;
   margin: 20px;
   display: inline-block;
 }
-#lazy_load > P {
+
+#lazy_load>P {
   letter-spacing: 8px;
 }
 
@@ -85,6 +86,7 @@ input[type="text"] {
   text-align: center;
   height: 50px;
 }
+
 input[type="text"]:focus {
   outline: none !important;
   border: 1px solid #0ecab1;
@@ -141,10 +143,12 @@ input[type="submit"]:hover {
   color: #1b9d8c;
   margin-bottom: 40px;
 }
+
 .content p a {
   text-decoration: none;
   color: inherit;
 }
+
 .content h3 {
   font-size: 1em;
   line-height: 23px;
@@ -178,13 +182,16 @@ input[type="submit"]:hover {
   height: 160px;
   display: none;
 }
+
 #suggestionList li {
   padding: 8px;
   cursor: pointer;
 }
+
 #suggestionList li:hover {
   background-color: rgba(16, 89, 80, 0.67);
 }
+
 #additional_info {
   width: 100%;
   display: flex;
@@ -193,7 +200,8 @@ input[type="submit"]:hover {
   font-size: 1.3em;
   margin: 40px 0 -40px 0;
 }
-#additional_info > b {
+
+#additional_info>b {
   margin-right: 15px;
 }
 
@@ -209,14 +217,17 @@ input[type="submit"]:hover {
 .additional-info-sc {
   margin-right: 50px;
 }
+
 .gridjs-wrapper {
   border-radius: 0 !important;
 }
+
 .gridjs-footer {
   background-color: rgba(16, 89, 80, 0.67) !important;
   border: 1px solid #1b9d8c !important;
   border-radius: 0 !important;
 }
+
 .gridjs-th-fixed {
   box-shadow: none !important;
 }
@@ -243,6 +254,11 @@ input[type="submit"]:hover {
   font-size: 1.4em;
 }
 
+.js-plotly-plot,
+.plot-container {
+  width: 1160px !important;
+}
+
 @media (max-width: 768px) {
   #search_filter {
     flex-direction: column !important;
@@ -251,6 +267,7 @@ input[type="submit"]:hover {
     gap: 5px !important;
     width: 100% !important;
   }
+
   input[type="text"] {
     border: 1px solid #424141 !important;
   }
@@ -258,9 +275,11 @@ input[type="submit"]:hover {
   .content {
     width: 90% !important;
   }
+
   .content p {
     font-size: 1em !important;
   }
+
   .content h3 {
     font-size: 0.9em !important;
   }
@@ -269,8 +288,14 @@ input[type="submit"]:hover {
     margin: 106px 0px 0 0 !important;
     width: 100% !important;
   }
-  .not-found{
+
+  .not-found {
     width: 100% !important;
     font-size: 1em !important;
+  }
+
+  .js-plotly-plot,
+  .plot-container {
+    width: 100% !important;
   }
 }
