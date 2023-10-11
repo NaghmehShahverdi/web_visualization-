@@ -37,6 +37,8 @@
           <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cell type Information</option>
           <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene specificity across clusters - tabular view</option>
           <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters - barplot</option>
+          <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Phenotype search</option>
+
         </select>
 
         <input name="cluster" type="text" id="input_cluster_id" placeholder="Cluster ID" value="{{ cluster }}">
