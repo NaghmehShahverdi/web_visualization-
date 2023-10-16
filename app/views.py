@@ -56,6 +56,7 @@ class Index(TemplateView):
             "color": "description for color . . .",
             "name": "description for name . . .",
             "p_value": "description for p_value . . .",
+            "enrichment_score": "description for enrichment_score . . .",
         }
         if visualization == 'option1':
             super_cluster = str(query.first().get_cluster_display()).split('#')

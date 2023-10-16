@@ -17,7 +17,8 @@ const description1 =
   "Input the cluster ID (0-460), and the table will exhibit the p-value and specificity rank for each gene.";
 const description2 =
   "Input a gene name to understand its specificity across various clusters.";
-const description3 = "Input a gene name to see its specificity across various clusters";
+const description3 =
+  "Input a gene name to see its specificity across various clusters";
 
 document.addEventListener("DOMContentLoaded", function () {
   search_filter.style.display = "flex";
@@ -47,10 +48,19 @@ document.addEventListener("DOMContentLoaded", function () {
     description.textContent = description1;
   }
 
+  if (visualization.value === "option4") {
+    input_cluster_id.style.display = "none";
+    input_gene.style.display = "none";
+    search_button.style.display = "none";
+    description.textContent = "";
+    input_cluster_id.value = "";
+  }
+
   if (count.value != 0 && count.value != "None") {
     results.style.display = "block";
-  }else if (count.value == 0){
-    results.innerHTML='<p class="not-found">The specificity value for this gene isn\'t available!</p>'
+  } else if (count.value == 0) {
+    results.innerHTML =
+      '<p class="not-found">The specificity value for this gene isn\'t available!</p>';
     results.style.display = "block";
   }
   document
@@ -75,6 +85,8 @@ visualization.addEventListener("change", function () {
   } else if (this.value === "option1") {
     input_cluster_id.style.display = "block";
     description.textContent = description1;
+  } else if (this.value === "option4") {
+    search_button.style.display = "none";
   }
 });
 

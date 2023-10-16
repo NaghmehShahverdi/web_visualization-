@@ -93,7 +93,7 @@
     var gridData = [];
     var gridColumns = [];
     {% if visualization == 'option3' %}
-     
+
     // results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
 
     {% elif visualization == 'option2' %}
@@ -101,18 +101,20 @@
     { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI gene number</div>') },
     {id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') },
     { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
+    { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') },
     { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Supercluster</div>') },
     { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
+
     {% for item in results %}
-    gridData.push([{{ item.cluster }}, {{ item.gene }}, {% round_decimal item.spe_val %},{{ item.spe_rank }},"{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
+    gridData.push([{{ item.cluster }}, {{ item.gene }}, {% round_decimal item.spe_val %},{{ item.spe_rank }},{{ item.enrichment_score }},"{% ss_separator item.get_cluster_display '#' %}", gridjs.html(
       `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
     )]);
     {% endfor %}
-  
-    
+
+
 
     {% elif visualization == 'option1' %}
-    
+
     gridColumns = [{ id: "name", name: gridjs.html('<div title="{{ columns_desc.name }}">Name</div>') },
     { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI</br>gene number</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
