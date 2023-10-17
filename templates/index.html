@@ -97,10 +97,10 @@
     // results.innerHTML= '<img class="graph" src="data:image/png;base64,{{ results }}" />'
 
     {% elif visualization == 'option2' %}
-    gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cell type</div>') },
-    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI gene number</div>') },
-    {id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity Value</div>') },
-    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity Rank</div>') },
+    gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cell</br>type</div>') },
+    { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI</br>gene number</div>') },
+    {id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
+    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Rank</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') },
     { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Supercluster</div>') },
     { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
