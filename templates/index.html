@@ -33,7 +33,8 @@
     <form id="form" action="{% url 'index' %}" method="get">
       <div id="search_filter">
         <select id="visualization" class="dropdown" name="visualization">
-          <option value="option0" selected hidden disabled>Select Option</option>
+          <option></option>
+          <option value="option0" selected disabled>Select Option</option>
           <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cell type Information</option>
           <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene specificity across clusters - tabular view</option>
           <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters - barplot</option>

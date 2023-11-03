@@ -3,6 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+.dropdown {
+  padding-top: 1em; /* Adjust the top padding to create space */
+}
+
+.dropdown option:first-child {
+  display: none; /* Hide the first option */
+}
 
 body {
   margin: 0;
