@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 from app.models import CLUSTER as cluster_labels
+from plotly.graph_objs import Layout
 
 
 
@@ -44,8 +45,12 @@ def generate_graph(filtered_genes):
 
         traces.append(trace)
 
+    layout = Layout(
+    paper_bgcolor='rgb(255,255,255)',
+    plot_bgcolor='rgb(255,255,255)'
+                   )
 
-    fig = go.Figure(data=traces)
+    fig = go.Figure(data=traces,layout=layout).update_traces(width = 0.9)
 
 
     plot_html = fig.to_html(full_html=True,default_width='100%',default_height='800px')
