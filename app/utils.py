@@ -36,7 +36,7 @@ def generate_graph(filtered_genes):
             textposition='inside',
             textfont=dict(color=cluster_colors[i]),
             showlegend=show_legend,
-            hoverlabel=dict(font_size=16),
+            hoverlabel=dict(font_size=18),
         )
 
         traces.append(trace)
@@ -50,7 +50,7 @@ def generate_graph(filtered_genes):
         yaxis_title='Specificity value (Duncan et al. in review)',
     )
 
-    fig = go.Figure(data=traces, layout=layout).update_traces(width=1, marker_line_width=0)
+    fig = go.Figure(data=traces, layout=layout).update_traces(width=1)
 
     fig.update_layout(legend = dict(font = dict(size = 8, color = "black")))
 
