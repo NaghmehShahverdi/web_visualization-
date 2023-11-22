@@ -27,7 +27,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.78);
+  background-color: rgba(0, 0, 0, 0.85);
   pointer-events: none;
   z-index: -1;
 }
@@ -35,7 +35,7 @@ body {
 #container {
   /* display: grid; */
   /* justify-content: center; */
-  max-width: 1200px;
+  max-width: 1250px;
   margin: 0 auto;
   padding: 60px 20px;
 }
@@ -54,14 +54,14 @@ body {
   margin: 70px auto;
 }
 
-#lazy_load>svg {
+#lazy_load > svg {
   width: 100px;
   height: 100px;
   margin: 20px;
   display: inline-block;
 }
 
-#lazy_load>P {
+#lazy_load > P {
   letter-spacing: 8px;
 }
 
@@ -201,14 +201,24 @@ input[type="submit"]:hover {
 
 #additional_info {
   width: 100%;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  font-size: 1.3em;
+  color: #aaa;
+  font-size: 0.9em;
+  font-weight: bold;
   margin: 40px 0 -40px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-#additional_info>b {
+.info-pair {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+#additional_info > b {
   margin-right: 15px;
 }
 
@@ -223,6 +233,7 @@ input[type="submit"]:hover {
 
 .additional-info-sc {
   margin-right: 50px;
+  color: #fff;
 }
 
 .gridjs-wrapper {
@@ -263,7 +274,7 @@ input[type="submit"]:hover {
 
 .js-plotly-plot,
 .plot-container {
-  width: 1160px !important;
+  width: 1210px !important;
 }
 
 @media (max-width: 768px) {
@@ -301,8 +312,8 @@ input[type="submit"]:hover {
     font-size: 1em !important;
   }
 
-  /* .js-plotly-plot,
-  .plot-container {
-    width: 100% !important;
-  } */
+  #additional_info {
+    flex-direction: column !important;
+    font-size: 1.2em !important;
+  }
 }

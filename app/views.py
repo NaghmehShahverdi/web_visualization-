@@ -38,8 +38,6 @@ class Index(TemplateView):
                 spe_rank__isnull=True, spe_val__isnull=True)
             context['count'] = query.count()
 
-
-
         if visualization == 'option3':
             context['graph'] = generate_graph(query.values(
                 'cluster', 'spe_val').order_by('cluster'))
@@ -60,6 +58,8 @@ class Index(TemplateView):
         }
         if visualization == 'option1':
             super_cluster = str(query.first().get_cluster_display()).split('#')
-            context['additional_info'] = f'<b>Super Cluster: </b><span class="additional-info-sc">{super_cluster[0]}</span><b>Color: </b><span style="background-color:#{super_cluster[1]}" class="additional-info-color"></span>'
-
+            context['additional_info'] = f'<div class="info-pair">Super Cluster: <span class="additional-info-sc">{super_cluster[0]}</span></div><div class="info-pair">Color: <span style="background-color:#{super_cluster[1]}" class="additional-info-color"></span></div>'
+        if visualization == 'option2':
+            first_item = query.first()
+            context['additional_info'] = f'<div class="info-pair">Gene: <span class="additional-info-sc">{first_item.name}</span></div><div class="info-pair">NCBI gene number: <span class="additional-info-sc">{first_item.gene}</span></div><div class="info-pair">Chromsome: <span class="additional-info-sc">{first_item.chr}</span></div><div class="info-pair">Start position: <span class="additional-info-sc">{first_item.start}</span></div><div class="info-pair">End position: <span class="additional-info-sc">{first_item.stop}</span></div><div class="info-pair">Genome build: <span class="additional-info-sc">GRch37</span></div>'
         return context

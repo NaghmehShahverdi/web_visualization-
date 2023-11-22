@@ -4,13 +4,11 @@ from app.models import CLUSTER as cluster_labels
 from plotly.graph_objs import Layout
 
 
-
-
 def generate_graph(filtered_genes):
     if len(filtered_genes) <= 0:
         return None
 
-    cluster_colors, super_cluster, legend_handles, added_colors = [], [], [], set()
+    cluster_colors, super_cluster = [], []
 
     df = pd.DataFrame.from_records(filtered_genes)
     df['spe_val'] = df['spe_val'].fillna(0)
@@ -20,39 +18,42 @@ def generate_graph(filtered_genes):
         super_cluster.append(cluster_labels[i][1].split('#')[0])
     df['cluster'] = df['cluster'].astype(str)
     df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + super_cluster
-    # Create a custom legend for superclusters
-
 
     traces = []
 
     for i in range(len(super_cluster)):
         mask = [True if x == i else False for x in range(len(super_cluster))]
 
-        # Only show the legend entry for the first trace in each supercluster
         show_legend = i == super_cluster.index(super_cluster[i])
 
         trace = go.Bar(
             x=df['cluster'][mask],
             y=df['spe_val'][mask],
-            name=super_cluster[i] if show_legend else '',  # Set the name for the first trace only
-            text=df['hovertext'][mask],  # Set text to an empty string
-            hoverinfo='y+text',  # Show y value and text when hovering
+            name=super_cluster[i] if show_legend else '',
+            text=df['hovertext'][mask],
+            hoverinfo='y+text',
             marker=dict(color=cluster_colors[i]),
             textposition='inside',
             textfont=dict(color=cluster_colors[i]),
-            showlegend=show_legend,  # Control legend visibility
+            showlegend=show_legend,
+            hoverlabel=dict(font_size=16),
         )
 
         traces.append(trace)
 
     layout = Layout(
-    paper_bgcolor='rgb(255,255,255)',
-    plot_bgcolor='rgb(255,255,255)'
-                   )
+        paper_bgcolor='rgb(255,255,255)',
+        plot_bgcolor='rgb(255,255,255)',
+        bargap=0,
+        bargroupgap=0,
+        xaxis_title='Cluster number (Siletti et al. 2023)',
+        yaxis_title='Specificity value (Duncan et al. in review)',
+    )
 
-    fig = go.Figure(data=traces,layout=layout).update_traces(width = 0.9)
+    fig = go.Figure(data=traces, layout=layout).update_traces(width=1, marker_line_width=0)
 
+    fig.update_layout(legend = dict(font = dict(size = 8, color = "black")))
 
-    plot_html = fig.to_html(full_html=True,default_width='100%',default_height='800px')
+    plot_html = fig.to_html(full_html=True, default_width='100%', default_height='800px')
 
     return plot_html
