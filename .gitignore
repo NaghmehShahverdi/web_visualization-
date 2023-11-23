@@ -10,3 +10,4 @@ db.sqlite3
 data/
 data.tar.gz
 update_server.sh
+.DS_Store
