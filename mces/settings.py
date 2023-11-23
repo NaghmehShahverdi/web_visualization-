@@ -112,6 +112,7 @@ DEFAULT_PASSWORD = "TheDefaultPassword"
 
 if PRODUCTION:
     ALLOWED_HOSTS = ['psy-map.com', 'www.psy-map.com']
+    CSRF_TRUSTED_ORIGINS = ['https://www.psy-map.com']
     DEBUG = False
 else:
     ALLOWED_HOSTS = ['*']
