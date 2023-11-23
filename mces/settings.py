@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'app'
+    'app',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +105,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = 'login'
+AUTH_USER_MODEL = 'users.User'
 
+DEFAULT_PASSWORD = "TheDefaultPassword"
 
 if PRODUCTION:
     ALLOWED_HOSTS = ['psy-map.com', 'www.psy-map.com']

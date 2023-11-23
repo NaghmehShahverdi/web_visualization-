@@ -33,11 +33,26 @@ body {
 }
 
 #container {
-  /* display: grid; */
-  /* justify-content: center; */
   max-width: 1250px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 60px 20px 10px 20px;
+  min-height: 60vh;
+  position: relative;
+}
+
+footer {
+  color: #fff;
+  font-size: 0.8em;
+  position: absolute;
+  bottom: -100px;
+  background: #21242d91;
+  width: 1209px;
+  padding: 12px;
+  text-align: center;
+  /* border: 1px solid #1b9d8c; */
+}
+footer p {
+  margin-top: 3px;
 }
 
 #search_filter {
@@ -291,6 +306,10 @@ input[type="submit"]:hover {
   }
 
   .content {
+    width: 90% !important;
+  }
+
+  footer {
     width: 90% !important;
   }
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mkdir -p static
-python manage.py makemigrations app --noinput
+python manage.py makemigrations app users --noinput
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 

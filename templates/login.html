@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+</head>
+
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="login-container">
+    <h2>Welcome!</h2>
+    <form class="login-form" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <button type="submit" class="login-btn">Send</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>Developed by: Naghmeh Shahverdi and Laramie Duncan</p>
+    <p>Update/maintenance: Psy-map team (psymap@gmail.com)</p>
+    <p>Stanford University, Department of Psychiatry and Behavioral Sciences</p>
+  </footer>
+
+
+  <script src="{% static 'js/login.js' %}"></script>
+</body>
+
+</html>

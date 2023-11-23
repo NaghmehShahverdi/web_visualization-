@@ -3,10 +3,13 @@ from django.urls import path
 from django.contrib import admin
 from django.conf import settings
 from app import views
+from users import views as auth
 
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
     path('admin/', admin.site.urls),
+    path('login/', auth.GetOrCreateUser.as_view(), name='login'),
+    path('logout/', auth.Logout.as_view(), name='logout'),
 ]
 
 
