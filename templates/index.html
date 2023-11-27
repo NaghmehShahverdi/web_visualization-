@@ -41,11 +41,11 @@
 
         <select id="phenotype" class="dropdown" name="phenotype">
           <option value="option0" selected hidden disabled>Select Category</option>
-          <option value="1" {% if phenotype == '1' %}selected{% endif %}>Schizophrenia</option>
-          <option value="2" {% if phenotype == '2' %}selected{% endif %}>Alcohol</option>
-          <option value="3" {% if phenotype == '3' %}selected{% endif %}>Sleep</option>
-          <option value="4" {% if phenotype == '4' %}selected{% endif %}>Multiple Sclerosis</option>
-          <option value="5" {% if phenotype == '5' %}selected{% endif %}>Alzheimer Disease</option>
+          <option value="1" {% if phenotype == '1' %}selected{% endif %}>Schizophrenia (Trubetskoy et al. 2022)</option>
+          <option value="2" {% if phenotype == '2' %}selected{% endif %}>Alcohol per week (Saunders et al. 2018)</option>
+          <option value="3" {% if phenotype == '3' %}selected{% endif %}>Sleep per night (Dashti et al. 2019)</option>
+          <option value="4" {% if phenotype == '4' %}selected{% endif %}> Multiple Sclerosis (International Multiple Sclerosis Genetics Consortium 2019)</option>
+          <option value="5" {% if phenotype == '5' %}selected{% endif %}>Alzheimer's Disease (Bellenguez et al. 2022)</option>
         </select>
 
         <input id="search_button" type="submit" value="search">
