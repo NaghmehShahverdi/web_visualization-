@@ -9,6 +9,7 @@ const form = document.getElementById("form");
 const description = document.getElementById("description");
 const count = document.getElementById("count");
 const visualization = document.getElementById("visualization");
+const phenotype = document.getElementById("phenotype");
 const search_button = document.getElementById("search_button");
 const input_cluster_id = document.getElementById("input_cluster_id");
 const input_gene = document.getElementById("input_gene");
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (visualization.value === "option0") {
     input_cluster_id.style.display = "none";
     input_gene.style.display = "none";
+    phenotype.style.display = "none";
     search_button.style.display = "none";
     description.textContent = "";
     input_cluster_id.value = "";
@@ -33,25 +35,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (visualization.value === "option3") {
     input_cluster_id.style.display = "none";
+    phenotype.style.display = "none";
     description.textContent = description3;
     input_cluster_id.value = "";
   }
 
   if (visualization.value === "option2") {
     input_cluster_id.style.display = "none";
+    phenotype.style.display = "none";
     description.textContent = description2;
     input_cluster_id.value = "";
   }
 
   if (visualization.value === "option1") {
     input_gene.style.display = "none";
+    phenotype.style.display = "none";
     description.textContent = description1;
   }
 
   if (visualization.value === "option4") {
     input_cluster_id.style.display = "none";
     input_gene.style.display = "none";
-    search_button.style.display = "none";
     description.textContent = "";
     input_cluster_id.value = "";
   }
@@ -73,6 +77,7 @@ visualization.addEventListener("change", function () {
 
   input_cluster_id.style.display = "none";
   input_gene.style.display = "none";
+  phenotype.style.display = "none";
   input_cluster_id.value = "";
   input_gene.value = "";
 
@@ -86,7 +91,7 @@ visualization.addEventListener("change", function () {
     input_cluster_id.style.display = "block";
     description.textContent = description1;
   } else if (this.value === "option4") {
-    search_button.style.display = "none";
+    phenotype.style.display = "block";
   }
 });
 

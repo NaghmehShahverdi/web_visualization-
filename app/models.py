@@ -505,3 +505,44 @@ class Cell(models.Model):
 
     def __str__(self) -> str:
         return f'{self.cluster} --- {self.name} --- {self.spe_rank}'
+
+
+class Phenotype(models.Model):
+    SHEET = (
+        (1, 'Schizophrenia'),
+        (2, 'Alcohol'),
+        (3, 'Sleep'),
+        (4, 'Multiple Sclerosis'),
+        (5, 'Alzheimer Disease'),
+    )
+    sheet = models.PositiveSmallIntegerField(choices=SHEET)
+    cluster = models.PositiveIntegerField(choices=CLUSTER)
+    sig1_and_cond2_and_none0 = models.IntegerField(null=True, blank=True)
+    type = models.CharField(max_length=255, null=True, blank=True)
+    ngenes = models.IntegerField(null=True, blank=True)
+    beta = models.FloatField(null=True, blank=True)
+    beta_std = models.FloatField(null=True, blank=True)
+    se = models.FloatField(null=True, blank=True)
+    p = models.FloatField(null=True, blank=True)
+    supercluster = models.CharField(max_length=255, null=True, blank=True)
+    class_auto_annotation = models.CharField(max_length=255, null=True, blank=True)
+    neurotransmitter_auto_annotation = models.CharField(max_length=255, null=True, blank=True)
+    neuropeptide_auto_annotation = models.TextField(null=True, blank=True)
+    subtype_auto_annotation = models.CharField(max_length=255, null=True, blank=True)
+    transferred_mtg_label = models.CharField(max_length=255, null=True, blank=True)
+    top_three_regions = models.TextField(null=True, blank=True)
+    top_three_dissections = models.TextField(null=True, blank=True)
+    top_enriched_genes = models.TextField(null=True, blank=True)
+    number_of_cells = models.IntegerField(null=True, blank=True)
+    doublet_finder_score = models.FloatField(null=True, blank=True)
+    total_umi = models.FloatField(null=True, blank=True)
+    fraction_unspliced = models.FloatField(null=True, blank=True)
+    fraction_mitochondrial = models.FloatField(null=True, blank=True)
+    h19_30_002 = models.IntegerField(null=True, blank=True)
+    h19_30_001 = models.IntegerField(null=True, blank=True)
+    h18_30_002 = models.IntegerField(null=True, blank=True)
+    h18_30_001 = models.IntegerField(null=True, blank=True)
+    fraction_cells_from_top_donor = models.FloatField(null=True, blank=True)
+    number_of_dissections = models.IntegerField(null=True, blank=True)
+    top_dissection_percentage = models.FloatField(null=True, blank=True)
+    dissections = models.TextField(null=True, blank=True)

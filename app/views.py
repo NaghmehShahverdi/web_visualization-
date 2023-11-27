@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django.views.generic import TemplateView
-from app.models import Cell
+from app.models import Cell, Phenotype
 from app.utils import generate_graph
 
 
@@ -17,35 +17,43 @@ class Index(TemplateView):
         gene = param.get('gene', '')
         cluster = param.get('cluster', '')
         visualization = param.get('visualization', 'option0')
+        phenotype = param.get('phenotype', '0')
 
         context['cluster'] = cluster
         context['visualization'] = visualization
+        context['phenotype'] = phenotype
         context['gene'] = gene
         context['count'] = count
         context['cells'] = []
         context['results'] = []
 
-        if visualization in ['option3', 'option2']:
-            if gene:
-                query.add(Q(name=gene), Q.AND)
-
-        if visualization == 'option1':
-            if cluster:
-                query.add(Q(cluster=cluster), Q.AND)
-
-        if not gene and not cluster:
-            return context
-        else:
-            query = Cell.objects.filter(query).exclude(
-                spe_rank__isnull=True, spe_val__isnull=True)
+        if visualization == 'option4':
+            query = Phenotype.objects.filter(sheet=phenotype)
             context['count'] = query.count()
-
-        if visualization == 'option3':
-            context['graph'] = generate_graph(query.values(
-                'cluster', 'spe_val').order_by('cluster'))
-
+            context['results'] = query.order_by('-cluster')
         else:
-            context['results'] = query.order_by('-spe_val')
+
+            if visualization in ['option3', 'option2']:
+                if gene:
+                    query.add(Q(name=gene), Q.AND)
+
+            elif visualization == 'option1':
+                if cluster:
+                    query.add(Q(cluster=cluster), Q.AND)
+
+            if not gene and not cluster:
+                return context
+            else:
+                query = Cell.objects.filter(query).exclude(
+                    spe_rank__isnull=True, spe_val__isnull=True)
+                context['count'] = query.count()
+
+            if visualization == 'option3':
+                context['graph'] = generate_graph(query.values(
+                    'cluster', 'spe_val').order_by('cluster'))
+
+            else:
+                context['results'] = query.order_by('-spe_val')
 
         context['columns_desc'] = {
             "cluster": "description for cluster . . .",
