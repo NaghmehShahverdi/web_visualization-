@@ -16,6 +16,7 @@
 
 
 <body>
+  <canvas id="canvas"></canvas>
   <div class="dark-overlay"></div>
   <input type="hidden" id="count" value="{{ count }}">
   <div class="content">
@@ -95,6 +96,7 @@
 
 
   <script src="{% static 'js/table.js' %}"></script>
+  <script src="{% static 'js/bg.js' %}"></script>
 
   <script>
     const parser = new DOMParser();
@@ -132,8 +134,8 @@
     {id:  "start", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Start</br>Position</div>') },
     {id:  "stop", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">End</br>Position</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
-    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Value</div>') },
-    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Rank</div>') },
+    { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Rank</div>') },
+    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') }]
     {% for item in results %}
     gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.chr}},{{item.start}},{{item.stop}},{% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %},{% round_decimal item.enrichment_score %}]);
@@ -149,35 +151,35 @@
 
 
 
-    gridColumns = [{ id: "cluster", name: "Cluster" },
+    gridColumns = [{ id: "cluster", name: "Cluster",width:120 },
     { id: "type", name: "Type" },
-    {id:  "ngenes", name: "Ngenes" },
+    {id:  "ngenes", name: "Ngenes",width:120 },
     {id:  "beta", name: "Beta" },
     {id:  "beta_std", name: "Beta STD" },
     { id: "se", name: "SE" },
     { id: "p", name: "P" },
-    { id: "supercluster", name: "Super Cluster" },
+    { id: "supercluster", name: "Super Cluster" ,width:200},
     { id: "class_auto_annotation", name: "Class Auto Annotation" },
     { id: "neurotransmitter_auto_annotation", name: "Neurotransmitter Auto Annotation" },
-    { id: "neuropeptide_auto_annotation", name: "Neuropeptide Auto Annotation" },
+    { id: "neuropeptide_auto_annotation", name: "Neuropeptide Auto Annotation",width:500 },
     { id: "subtype_auto_annotation", name: "Subtype Auto Annotation" },
     { id: "transferred_mtg_label", name: "Transferred MTG Label" },
-    { id: "top_three_regions", name: "Top Three Regions" },
+    { id: "top_three_regions", name: "Top Three Regions",width:500 },
     { id: "top_three_dissections", name: "Top Three Dissections" },
-    { id: "top_enriched_genes", name: "Top Enriched Genes" },
+    { id: "top_enriched_genes", name: "Top Enriched Genes",width:500 },
     { id: "number_of_cells", name: "Number Of Cells" },
     { id: "doublet_finder_score", name: "Doublet Finder Score" },
     { id: "total_umi", name: "total UMI" },
     { id: "fraction_unspliced", name: "Fraction Unspliced" },
     { id: "fraction_mitochondrial", name: "Fraction Mitochondrial" },
-    { id: "h19_30_002", name: "H19.30.002" },
-    { id: "h19_30_001", name: "H19.30.001" },
-    { id: "h18_30_002", name: "H18.30.002" },
-    { id: "h18_30_001", name: "H18.30.001" },
+    { id: "h19_30_002", name: "H19.30.002",width:150 },
+    { id: "h19_30_001", name: "H19.30.001",width:150 },
+    { id: "h18_30_002", name: "H18.30.002",width:150 },
+    { id: "h18_30_001", name: "H18.30.001",width:150 },
     { id: "fraction_cells_from_top_donor", name: "Fraction Cells From Top Donor" },
     { id: "number_of_dissections", name: "Number Of Dissections" },
     { id: "top_dissection_percentage", name: "Top Dissection Percentage" },
-    { id: "dissections", name: "Dissections" }]
+    { id: "dissections", name: "Dissections",width:1000 }]
 
 
   {% for item in results %}

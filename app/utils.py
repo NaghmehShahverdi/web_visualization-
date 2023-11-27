@@ -52,7 +52,7 @@ def generate_graph(filtered_genes):
 
     fig = go.Figure(data=traces, layout=layout).update_traces(width=1)
 
-    fig.update_layout(legend=dict(font=dict(size=8, color="black")))
+    fig.update_layout(legend=dict(font=dict(size=12, color="black")))
 
     plot_html = fig.to_html(full_html=True, default_width='100%', default_height='800px')
 
