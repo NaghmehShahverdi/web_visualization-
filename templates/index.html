@@ -20,11 +20,13 @@
   <input type="hidden" id="count" value="{{ count }}">
   <div class="content">
     <p><a href="/">Mapping Schizophrenia's Cellular Etiology: Integrating snRNAseq and GWASs</a></p>
-    <h3p>Welcome to our platform, where we offer four specialized search options that allow you to cell types, gene specificity 
-      across cell types, and phenotypic associations for schizophrenia and other polygenic phenotypes. To sort tables by a specific 
-      column, simply click on the column header. Clicking the column header again will reverse the sort order. For information on a specific gene or value, use the search box located above the table.
-      Single nucleus RNA-seq (snRNAseq) based cell types reported here are from the <a href="https://linnarssonlab.org/">Linnarsson</a> group as published in Science, <a href="https://www.science.org/doi/10.1126/science.add7046">Siletti et al. 2023.</a>
-      </h3>
+    <h3>Welcome to our platform, where we offer four specialized search options that allow you to search cell types, gene
+      specificity across cell types, and phenotypic associations for schizophrenia and other polygenic brain phenotypes.
+      To sort tables by a specific column, simply click on the column header. Clicking the column header again will
+      reverse the sort order. For information on a specific gene or value, use the search box located above the table.
+      Single nucleus RNA-seq (snRNAseq) based cell types reported here are from the <a href="https://linnarssonlab.org/">Linnarsson</a> group as published in
+      Science, <a href="https://www.science.org/doi/10.1126/science.add7046">Siletti et al. 2023.</a>
+    </h3>
   </div>
   <div id="container">
     <form id="form" action="{% url 'index' %}" method="get">
@@ -32,8 +34,10 @@
         <select id="visualization" class="dropdown" name="visualization">
           <option value="option0" selected hidden disabled>Select Option</option>
           <option value="option1" {% if visualization == 'option1' %}selected{% endif %}>Cell type Information</option>
-          <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene specificity across clusters - tabular view</option>
-          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters - barplot</option>
+          <option value="option2" {% if visualization == 'option2' %}selected{% endif %}>Gene specificity across clusters
+            - tabular view</option>
+          <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters
+            - barplot</option>
           <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Phenotype search</option>
         </select>
 
@@ -45,8 +49,10 @@
           <option value="1" {% if phenotype == '1' %}selected{% endif %}>Schizophrenia (Trubetskoy et al. 2022)</option>
           <option value="2" {% if phenotype == '2' %}selected{% endif %}>Alcohol per week (Saunders et al. 2018)</option>
           <option value="3" {% if phenotype == '3' %}selected{% endif %}>Sleep per night (Dashti et al. 2019)</option>
-          <option value="4" {% if phenotype == '4' %}selected{% endif %}> Multiple Sclerosis (International Multiple Sclerosis Genetics Consortium 2019)</option>
-          <option value="5" {% if phenotype == '5' %}selected{% endif %}>Alzheimer's Disease (Bellenguez et al. 2022)</option>
+          <option value="4" {% if phenotype == '4' %}selected{% endif %}> Multiple Sclerosis (International Multiple
+            Sclerosis Genetics Consortium 2019)</option>
+          <option value="5" {% if phenotype == '5' %}selected{% endif %}>Alzheimer's Disease (Bellenguez et al. 2022)
+          </option>
         </select>
 
         <input id="search_button" type="submit" value="search">
@@ -86,11 +92,11 @@
 
 
 
-        <footer>
-        <p>Developed by: Naghmeh Shahverdi and Laramie Duncan</p>
-        <p>Update/maintenance: Psy-map team (psymap@gmail.com)</p>
-        <p>Stanford University, Department of Psychiatry and Behavioral Sciences</p>
-        </footer>
+    <footer>
+      <p>Developed by: Naghmeh Shahverdi and Laramie Duncan</p>
+      <p>Update/maintenance: Psy-map team (psymap@gmail.com)</p>
+      <p>Stanford University, Department of Psychiatry and Behavioral Sciences</p>
+    </footer>
   </div>
 
 
@@ -115,30 +121,30 @@
     gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cell</br>type</div>') },
     { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Supercluster</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
-    {id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
+    { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') },
     { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
 
     {% for item in results %}
-    gridData.push([{{ item.cluster }},"{% ss_separator item.get_cluster_display '#' %}",{% format_scientific item.scz_2022_p %}, {% round_decimal item.spe_val %},{% round_decimal item.enrichment_score %}, gridjs.html(
+    gridData.push([{{ item.cluster }}, "{% ss_separator item.get_cluster_display '#' %}", {% format_scientific item.scz_2022_p %}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}, gridjs.html(
       `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
     )]);
     {% endfor %}
 
-    
+
     {% elif visualization == 'option1' %}
 
     gridColumns = [{ id: "name", name: gridjs.html('<div title="{{ columns_desc.name }}">Name</div>') },
     { id: "gene_number", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">NCBI</br>gene number</div>') },
-    {id:  "chr", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Chromosome</div>') },
-    {id:  "start", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Start</br>Position</div>') },
-    {id:  "stop", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">End</br>Position</div>') },
+    { id: "chr", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Chromosome</div>') },
+    { id: "start", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Start</br>Position</div>') },
+    { id: "stop", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">End</br>Position</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
     { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Rank</div>') },
     { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') }]
     {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{item.chr}},{{item.start}},{{item.stop}},{% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %},{% round_decimal item.enrichment_score %}]);
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.chr }}, {{ item.start }}, {{ item.stop }}, {% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}]);
 
     {% endfor %}
 
@@ -151,44 +157,38 @@
 
 
 
-    gridColumns = [{ id: "cluster", name: "Cluster",width:120 },
-    { id: "type", name: "Type" },
-    {id:  "ngenes", name: "Ngenes",width:120 },
-    {id:  "beta", name: "Beta" },
-    {id:  "beta_std", name: "Beta STD" },
-    { id: "se", name: "SE" },
+    gridColumns = [{ id: "cluster", name: "Cluster", width: 120 },
     { id: "p", name: "P" },
-    { id: "supercluster", name: "Super Cluster" ,width:200},
+    { id: "supercluster", name: "Super Cluster", width: 200 },
     { id: "class_auto_annotation", name: "Class Auto Annotation" },
-    { id: "neurotransmitter_auto_annotation", name: "Neurotransmitter Auto Annotation" },
-    { id: "neuropeptide_auto_annotation", name: "Neuropeptide Auto Annotation",width:500 },
+    { id: "neuropeptide_auto_annotation", name: "Neuropeptide Auto Annotation", width: 500 },
     { id: "subtype_auto_annotation", name: "Subtype Auto Annotation" },
     { id: "transferred_mtg_label", name: "Transferred MTG Label" },
-    { id: "top_three_regions", name: "Top Three Regions",width:500 },
+    { id: "top_three_regions", name: "Top Three Regions", width: 500 },
     { id: "top_three_dissections", name: "Top Three Dissections" },
-    { id: "top_enriched_genes", name: "Top Enriched Genes",width:500 },
+    { id: "top_enriched_genes", name: "Top Enriched Genes", width: 500 },
     { id: "number_of_cells", name: "Number Of Cells" },
     { id: "doublet_finder_score", name: "Doublet Finder Score" },
     { id: "total_umi", name: "total UMI" },
     { id: "fraction_unspliced", name: "Fraction Unspliced" },
     { id: "fraction_mitochondrial", name: "Fraction Mitochondrial" },
-    { id: "h19_30_002", name: "H19.30.002",width:150 },
-    { id: "h19_30_001", name: "H19.30.001",width:150 },
-    { id: "h18_30_002", name: "H18.30.002",width:150 },
-    { id: "h18_30_001", name: "H18.30.001",width:150 },
+    { id: "h19_30_002", name: "H19.30.002", width: 150 },
+    { id: "h19_30_001", name: "H19.30.001", width: 150 },
+    { id: "h18_30_002", name: "H18.30.002", width: 150 },
+    { id: "h18_30_001", name: "H18.30.001", width: 150 },
     { id: "fraction_cells_from_top_donor", name: "Fraction Cells From Top Donor" },
     { id: "number_of_dissections", name: "Number Of Dissections" },
     { id: "top_dissection_percentage", name: "Top Dissection Percentage" },
-    { id: "dissections", name: "Dissections",width:1000 }]
+    { id: "dissections", name: "Dissections", width: 1000 }]
 
 
-  {% for item in results %}
-    gridData.push(["{{ item.cluster }}","{{ item.type }}", "{{ item.ngenes }}", "{{ item.beta }}", "{{ item.beta_std }}", "{{ item.se }}",
-     "{{ item.p }}", "{{ item.supercluster }}", "{{ item.class_auto_annotation }}", "{{ item.neurotransmitter_auto_annotation }}", "{{ item.neuropeptide_auto_annotation }}", 
-    "{{ item.subtype_auto_annotation }}", "{{ item.transferred_mtg_label }}", "{{ item.top_three_regions }}", "{{ item.top_three_dissections }}"," {{ item.top_enriched_genes }}", "{{ item.number_of_cells }}", 
-     "{{ item.doublet_finder_score }}", "{{ item.total_umi }}", "{{ item.fraction_unspliced }}", "{{ item.fraction_mitochondrial }}", "{{ item.h19_30_002 }}", "{{ item.h19_30_001 }}", 
-     "{{ item.h18_30_002 }}", "{{ item.h18_30_001 }}", "{{ item.fraction_cells_from_top_donor }}", "{{ item.number_of_dissections }}", "{{ item.top_dissection_percentage }}", "{{ item.dissections }}" ]);
-  {% endfor %}
+    {% for item in results %}
+    gridData.push(["{{ item.cluster }}",
+      "{{ item.p }}", "{{ item.supercluster }}", "{{ item.class_auto_annotation }}", "{{ item.neuropeptide_auto_annotation }}",
+      "{{ item.subtype_auto_annotation }}", "{{ item.transferred_mtg_label }}", "{{ item.top_three_regions }}", "{{ item.top_three_dissections }}", " {{ item.top_enriched_genes }}", "{{ item.number_of_cells }}",
+      "{{ item.doublet_finder_score }}", "{{ item.total_umi }}", "{{ item.fraction_unspliced }}", "{{ item.fraction_mitochondrial }}", "{{ item.h19_30_002 }}", "{{ item.h19_30_001 }}",
+      "{{ item.h18_30_002 }}", "{{ item.h18_30_001 }}", "{{ item.fraction_cells_from_top_donor }}", "{{ item.number_of_dissections }}", "{{ item.top_dissection_percentage }}", "{{ item.dissections }}"]);
+    {% endfor %}
 
 
 
@@ -221,7 +221,7 @@
           'border': '2px solid #1b9d8c',
           'text-align': 'center',
           'background-color': 'rgb(101, 181, 171)',
-          'font-size':'13px'
+          'font-size': '13px'
         },
         td: {
           // 'background-color': '#080c13',

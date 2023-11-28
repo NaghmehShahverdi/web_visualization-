@@ -18,22 +18,11 @@ body{
   height: 100vh;
   position: relative;
   background-color: #212124;
-  background-image: url("../img/bg.jpg");
+  background-image: url("../img/bg2.png");
   background-size: cover;
   background-attachment: fixed;
 }
 
-.dark-overlay {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
-  pointer-events: none;
-  z-index: -1;
-}
 
 .login-container {
   background-color: #21242d;

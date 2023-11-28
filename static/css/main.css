@@ -10,7 +10,9 @@
 .dropdown option:first-child {
   display: none; /* Hide the first option */
 }
-
+a{
+  color: #fff;
+}
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -175,6 +177,7 @@ input[type="submit"]:hover {
 .content h3 {
   font-size: 1em;
   line-height: 23px;
+  font-weight: 400;
 }
 
 #description {

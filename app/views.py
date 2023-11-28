@@ -30,7 +30,7 @@ class Index(TemplateView):
         if visualization == 'option4':
             query = Phenotype.objects.filter(sheet=phenotype)
             context['count'] = query.count()
-            context['results'] = query.order_by('-cluster')
+            context['results'] = query.order_by('p')
         else:
 
             if visualization in ['option3', 'option2']:
