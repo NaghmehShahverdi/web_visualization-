@@ -34,7 +34,7 @@ class GetOrCreateUser(TemplateView):
 
         auth_user = authenticate(request, username=user.email, password=settings.DEFAULT_PASSWORD)
 
-        if auth_user or str(user.email).lower() in ['mshzsh@gmail.com', 'naghmehshahverdi2@gmail.com', 'laramied@stanford.edu']:
+        if auth_user:
             login(request, auth_user)
             return redirect("/")
 
