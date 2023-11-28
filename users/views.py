@@ -13,7 +13,9 @@ class GetOrCreateUser(TemplateView):
     template_name = 'login.html'
 
     def get(self, request, *args, **kwargs):
+        print("\n============================\n User Checking!",flush=True)
         if self.request.user.is_authenticated:
+            print("\n============================\n User is authenticated!",flush=True)
             return HttpResponseRedirect(reverse('index'))
         return super().get(request, *args, **kwargs)
 
