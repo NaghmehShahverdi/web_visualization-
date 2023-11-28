@@ -102,7 +102,6 @@
 
 
   <script src="{% static 'js/table.js' %}"></script>
-  <script src="{% static 'js/bg.js' %}"></script>
 
   <script>
     const parser = new DOMParser();
@@ -183,11 +182,11 @@
 
 
     {% for item in results %}
-    gridData.push(["{{ item.cluster }}",
-      "{{ item.p }}", "{{ item.supercluster }}", "{{ item.class_auto_annotation }}", "{{ item.neuropeptide_auto_annotation }}",
+    gridData.push([{{ item.cluster }},
+      {{ item.p }}, "{{ item.supercluster }}", "{{ item.class_auto_annotation }}", "{{ item.neuropeptide_auto_annotation }}",
       "{{ item.subtype_auto_annotation }}", "{{ item.transferred_mtg_label }}", "{{ item.top_three_regions }}", "{{ item.top_three_dissections }}", " {{ item.top_enriched_genes }}", "{{ item.number_of_cells }}",
-      "{{ item.doublet_finder_score }}", "{{ item.total_umi }}", "{{ item.fraction_unspliced }}", "{{ item.fraction_mitochondrial }}", "{{ item.h19_30_002 }}", "{{ item.h19_30_001 }}",
-      "{{ item.h18_30_002 }}", "{{ item.h18_30_001 }}", "{{ item.fraction_cells_from_top_donor }}", "{{ item.number_of_dissections }}", "{{ item.top_dissection_percentage }}", "{{ item.dissections }}"]);
+      "{{ item.doublet_finder_score }}", "{{ item.total_umi }}", "{{ item.fraction_unspliced }}", "{{ item.fraction_mitochondrial }}", {{ item.h19_30_002 }}, {{ item.h19_30_001 }},
+      {{ item.h18_30_002 }}, {{ item.h18_30_001 }}, "{{ item.fraction_cells_from_top_donor }}", "{{ item.number_of_dissections }}", "{{ item.top_dissection_percentage }}", "{{ item.dissections }}"]);
     {% endfor %}
 
 
