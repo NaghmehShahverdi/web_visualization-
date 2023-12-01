@@ -119,13 +119,13 @@
     {% elif visualization == 'option2' %}
     gridColumns = [{ id: "cluster", name: gridjs.html('<div title="{{ columns_desc.cluster }}">Cell</br>type</div>') },
     { id: "super_cluster", name: gridjs.html('<div title="{{ columns_desc.super_cluster }}">Supercluster</div>') },
-    { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
+    ///{ id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
     { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') },
     { id: "color", name: gridjs.html('<div title="{{ columns_desc.color }}">Color</div>'), sort: false }];
 
     {% for item in results %}
-    gridData.push([{{ item.cluster }}, "{% ss_separator item.get_cluster_display '#' %}", {% format_scientific item.scz_2022_p %}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}, gridjs.html(
+    gridData.push([{{ item.cluster }}, "{% ss_separator item.get_cluster_display '#' %}", {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}, gridjs.html(
       `<span style="background-color:#{% ss_separator item.get_cluster_display '#' 'color' %}" class="super-cluster"></span>`
     )]);
     {% endfor %}
@@ -143,7 +143,7 @@
     { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') }]
     {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.chr }}, {{ item.start }}, {{ item.stop }}, {% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}]);
+    gridData.push(["{{ item.name }}", {{ item.scz_2022_p }}, {{ item.chr }}, {{ item.start }}, {{ item.stop }}, {% format_scientific item.scz_2022_p %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}]);
 
     {% endfor %}
 
