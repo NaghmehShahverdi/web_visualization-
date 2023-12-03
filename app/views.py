@@ -49,9 +49,8 @@ class Index(TemplateView):
                 context['count'] = query.count()
 
             if visualization == 'option3':
-                cells=query.values(
-                    'cluster', 'spe_val').order_by('cluster')
-                phenotype= Phenotype.objects.filter(sheet=phenotype).first()
+                cells=query.values('cluster', 'spe_val').order_by('cluster')
+                phenotype= Phenotype.objects.filter(sheet=1).values('cluster', 'top_three_regions')
                 context['graph'] = generate_graph(cells,phenotype)
 
             else:
