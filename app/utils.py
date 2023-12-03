@@ -6,8 +6,7 @@ from plotly.graph_objs import Layout
 
 def generate_graph(filtered_genes, phenotype=None):
 
-    print('**********************************************************************', flush=True)
-    print(phenotype, flush=True)
+
 
     if len(filtered_genes) <= 0:
         return None
@@ -20,13 +19,13 @@ def generate_graph(filtered_genes, phenotype=None):
     df['spe_val'] = df['spe_val'].fillna(0)
     print(df2, flush=True)
 
-    for i, j in enumerate(cluster_labels[:3]):
+    for i, j in enumerate(cluster_labels):
         cluster_colors.append('#'+str(cluster_labels[i][1].split('#')[1]))
         super_cluster.append(cluster_labels[i][1].split('#')[0])
     df['cluster'] = df['cluster'].astype(str)
     df2['top_three_regions'] = df2['top_three_regions'].astype(str)
     df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + \
-        super_cluster + ' top_three_regions: '+df2['top_three_regions']
+        super_cluster + ' <br>Top Three Regions: '+df2['top_three_regions']
 
     traces = []
 
