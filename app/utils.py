@@ -4,20 +4,24 @@ from app.models import CLUSTER as cluster_labels
 from plotly.graph_objs import Layout
 
 
-def generate_graph(filtered_genes):
-    if len(filtered_genes) <= 0:
+def generate_graph(filtered_genes,phenotype=None):
+    if len(filtered_genes) <= 0 :
         return None
-
+    print('**********************************************************************',flush=True)
+    print(phenotype, flush=True)
     cluster_colors, super_cluster = [], []
 
     df = pd.DataFrame.from_records(filtered_genes)
+    df2 = pd.DataFrame.from_records(phenotype)
     df['spe_val'] = df['spe_val'].fillna(0)
+    print(df2, flush=True)
 
-    for i, j in enumerate(cluster_labels):
+    for i, j in enumerate(cluster_labels[:3]):
         cluster_colors.append('#'+str(cluster_labels[i][1].split('#')[1]))
         super_cluster.append(cluster_labels[i][1].split('#')[0])
     df['cluster'] = df['cluster'].astype(str)
-    df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + super_cluster
+    df2['top_three_regions']=df2['top_three_regions'].astype(str)
+    df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + super_cluster + ' top_three_regions: '+df2['top_three_regions']
 
     traces = []
 
