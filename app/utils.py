@@ -24,8 +24,9 @@ def generate_graph(filtered_genes, phenotype=None):
         super_cluster.append(cluster_labels[i][1].split('#')[0])
     df['cluster'] = df['cluster'].astype(str)
     df2['top_three_regions'] = df2['top_three_regions'].astype(str)
+    df2['top_three_dissections'] = df2['top_three_dissections'].astype(str)
     df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + \
-        super_cluster + ' <br>Top Three Regions: '+df2['top_three_regions']
+        super_cluster + ' <br>Top Three Regions: '+df2['top_three_regions']+ '<br> Top Three Dissections: '+ df2['top_three_dissections'] 
 
     traces = []
 
