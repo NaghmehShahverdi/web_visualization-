@@ -60,6 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
     input_cluster_id.value = "";
   }
 
+  if (visualization.value === "option5") {
+    input_cluster_id.style.display = "none";
+    input_gene.style.display = "none";
+    description.textContent = "";
+    input_cluster_id.value = "";
+  }
+
   if (count.value != 0 && count.value != "None") {
     results.style.display = "block";
   } else if (count.value == 0) {
@@ -92,6 +99,8 @@ visualization.addEventListener("change", function () {
     description.textContent = description1;
   } else if (this.value === "option4") {
     phenotype.style.display = "block";
+  } else if (this.value === "option5") {
+    input_gene.style.display = "block";
   }
 });
 

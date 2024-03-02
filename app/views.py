@@ -33,7 +33,7 @@ class Index(TemplateView):
             context['results'] = query.order_by('p')
         else:
 
-            if visualization in ['option3', 'option2']:
+            if visualization in ['option3', 'option2', 'option5']:
                 if gene:
                     query.add(Q(name=gene), Q.AND)
 
@@ -49,9 +49,16 @@ class Index(TemplateView):
                 context['count'] = query.count()
 
             if visualization == 'option3':
-                cells=query.values('cluster', 'spe_val').order_by('cluster')
-                phenotype= Phenotype.objects.filter(sheet=1).values('cluster', 'top_three_regions','top_three_dissections').order_by('cluster')
-                context['graph'] = generate_graph(cells,phenotype)
+                cells = query.values('cluster', 'spe_val').order_by('cluster')
+                phenotype = Phenotype.objects.filter(sheet=1).values(
+                    'cluster', 'top_three_regions', 'top_three_dissections').order_by('cluster')
+                context['graph'] = generate_graph(cells, phenotype)
+
+            elif visualization == 'option5':
+                cells = query.values('cluster', 'enrichment_score').order_by('cluster')
+                phenotype = Phenotype.objects.filter(sheet=1).values(
+                    'cluster', 'top_three_regions', 'top_three_dissections').order_by('cluster')
+                context['graph'] = generate_graph(cells, phenotype, 5)
 
             else:
                 context['results'] = query.order_by('-spe_val')

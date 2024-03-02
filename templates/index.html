@@ -39,6 +39,8 @@
           <option value="option3" {% if visualization == 'option3' %}selected{% endif %}>Gene specificity across clusters
             - barplot</option>
           <option value="option4" {% if visualization == 'option4' %}selected{% endif %}>Phenotype search</option>
+          <option value="option5" {% if visualization == 'option5' %}selected{% endif %}>Gene enrichment value across clusters
+            - barplot</option>
         </select>
 
         <input name="cluster" type="text" id="input_cluster_id" placeholder="Cluster ID" value="{{ cluster }}">

@@ -4,9 +4,7 @@ from app.models import CLUSTER as cluster_labels
 from plotly.graph_objs import Layout
 
 
-def generate_graph(filtered_genes, phenotype=None):
-
-
+def generate_graph(filtered_genes, phenotype=None, option=3):
 
     if len(filtered_genes) <= 0:
         return None
@@ -15,8 +13,11 @@ def generate_graph(filtered_genes, phenotype=None):
 
     df = pd.DataFrame.from_records(filtered_genes)
     df2 = pd.DataFrame.from_records(phenotype)
+    if option == 3:
+        df['spe_val'] = df['spe_val'].fillna(0)
+    else:
+        df['enrichment_score'] = df['enrichment_score'].fillna(0)
 
-    df['spe_val'] = df['spe_val'].fillna(0)
     print(df2, flush=True)
 
     for i, j in enumerate(cluster_labels):
@@ -26,7 +27,8 @@ def generate_graph(filtered_genes, phenotype=None):
     df2['top_three_regions'] = df2['top_three_regions'].astype(str)
     df2['top_three_dissections'] = df2['top_three_dissections'].astype(str)
     df['hovertext'] = 'Cluster: ' + df['cluster'] + '<br>Super Cluster: ' + \
-        super_cluster + ' <br>Top Three Regions: '+df2['top_three_regions']+ '<br> Top Three Dissections: '+ df2['top_three_dissections'] 
+        super_cluster + ' <br>Top Three Regions: ' + \
+        df2['top_three_regions'] + '<br> Top Three Dissections: ' + df2['top_three_dissections']
 
     traces = []
 
@@ -37,7 +39,7 @@ def generate_graph(filtered_genes, phenotype=None):
 
         trace = go.Bar(
             x=df['cluster'][mask],
-            y=df['spe_val'][mask],
+            y=df['spe_val'][mask] if option == 3 else df['enrichment_score'][mask],
             name=super_cluster[i] if show_legend else '',
             text=df['hovertext'][mask],
             hoverinfo='y+text',
@@ -56,7 +58,7 @@ def generate_graph(filtered_genes, phenotype=None):
         bargap=0,
         bargroupgap=0,
         xaxis_title='Cluster number (Siletti et al. 2023)',
-        yaxis_title='Specificity value (Duncan et al. in review)',
+        yaxis_title='Specificity value (Duncan et al. in review)' if option == 3 else 'Enrichment value (Siletti et al. 2023)',
     )
 
     fig = go.Figure(data=traces, layout=layout).update_traces(width=1)
