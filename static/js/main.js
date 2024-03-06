@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (visualization.value === "option5") {
     input_cluster_id.style.display = "none";
-    input_gene.style.display = "none";
+    phenotype.style.display = "none";
     description.textContent = "";
     input_cluster_id.value = "";
   }
