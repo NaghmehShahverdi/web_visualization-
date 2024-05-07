@@ -19,6 +19,8 @@ def round_decimal(value, decimal_places=6):
 
 @register.simple_tag
 def format_scientific(value, decimal_places=3):
+    if not value:
+        return 0
     try:
         decimal_value = Decimal(value)
         return "{:.{}E}".format(decimal_value, decimal_places)

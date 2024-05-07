@@ -92,7 +92,6 @@ window.onload = function () {
       }
     }
 
-    // for each point find the closest points. From https://tympanus.net/codrops/2014/09/23/animated-background-headers/
     for (var i = 0; i < points.length; i++) {
       var closest = [];
       var p1 = points[i];

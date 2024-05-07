@@ -502,9 +502,10 @@ class Cell(models.Model):
     gene_exp = models.FloatField(null=True, blank=True)
     scz_2022_p_log = models.FloatField(null=True, blank=True)
     enrichment_score = models.FloatField(null=True, blank=True)
+    ptsd=models.FloatField(null=True, blank=True)
 
     def __str__(self) -> str:
-        return f'{self.cluster} --- {self.name} --- {self.spe_rank}'
+        return f'{self.cluster} --- {self.name} --- {self.spe_rank} --- {self.ptsd}'
 
 
 class Phenotype(models.Model):
