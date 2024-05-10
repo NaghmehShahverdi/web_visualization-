@@ -141,12 +141,12 @@
     { id: "start", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">Start</br>Position</div>') },
     { id: "stop", name: gridjs.html('<div title="{{ columns_desc.gene_number }}">End</br>Position</div>') },
     { id: "p_value", name: gridjs.html('<div title="{{ columns_desc.p_value }}">P-value</br>(schizophrenia)</div>') },
-    { id: "ptsd", name: gridjs.html('<div title="{{ columns_desc.ptsd }}">PTSD</br></div>') },
+    { id: "ptsd", name: gridjs.html('<div title="{{ columns_desc.ptsd }}">P-value</br>PTSD</br></div>') },
     { id: "specificity_rank", name: gridjs.html('<div title="{{ columns_desc.specificity_rank }}">Specificity</br>Rank</div>') },
     { id: "specificity_value", name: gridjs.html('<div title="{{ columns_desc.specificity_value }}">Specificity</br>Value</div>') },
     { id: "enrichment_score", name: gridjs.html('<div title="{{ columns_desc.enrichment_score }}">Enrichment</br>Score</div>') }]
     {% for item in results %}
-    gridData.push(["{{ item.name }}", {{ item.scz_2022_p }}, {{ item.chr }}, {{ item.start }}, {{ item.stop }}, {% format_scientific item.scz_2022_p %}, {% format_scientific item.ptsd %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}]);
+    gridData.push(["{{ item.name }}", {{ item.gene }}, {{ item.chr }}, {{ item.start }}, {{ item.stop }}, {% format_scientific item.scz_2022_p %}, {% format_scientific item.ptsd %}, {{ item.spe_rank }}, {% round_decimal item.spe_val %}, {% round_decimal item.enrichment_score %}]);
 
     {% endfor %}
 
